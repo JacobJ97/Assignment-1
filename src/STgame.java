@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by outba on 9/2/2016.
@@ -14,15 +15,16 @@ public class STgame {
     }
 
     public void selectDealer() {
-        double randomNumber = Math.random();
-        System.out.println(randomNumber);
-    }
+        Random rand = new Random();
+        int randomNumber = rand.nextInt(numOfPlayers) + 1;
+        System.out.println("Player number #" + randomNumber + " was chosen!");
+        }
 
     public void dealRandomCardsToEachPlayer() {
         players = new STplayer[numOfPlayers];
         for (STplayer player: players) {
-            //ArrayList<STcard> card = deck.dealCards(AMOUNT_OF_CARDS_DEALT);
-            //player.setCards();
+            ArrayList<STcard> cards = deck.dealCards(AMOUNT_OF_CARDS_DEALT);
+            player.setCards(cards);
         }
 
     }
