@@ -12,9 +12,10 @@ public class STdeck {
     public STdeck() {
         cards = new ArrayList<>();
 
-        for (int i = 0; i < NUM_OF_CARDS_TOTAL; i++) {
+        for (int i = 1; i < NUM_OF_CARDS_TOTAL + 1; i++) {
             cards.add(new STcard(i));
             STcard.x++;
+            STcard.y++;
         }
         Collections.shuffle(cards);
     }
@@ -22,8 +23,8 @@ public class STdeck {
     public ArrayList<STcard> dealCards(int amountOfCardsDealt) {
         ArrayList<STcard> cardReceived = new ArrayList<STcard>();
         for (int i = 0; i < amountOfCardsDealt; i++) {
-            int idRandom = new Random().nextInt(cards.size());
-            STcard chosenCard = cards.remove(idRandom);
+            int idNum = i;
+            STcard chosenCard = cards.remove(idNum);
             cardReceived.add(chosenCard);
             System.out.println("Card received = " + chosenCard);
         }

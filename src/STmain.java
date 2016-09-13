@@ -34,7 +34,6 @@ public class STmain {
         System.exit(0);
     }
 
-
     private static void startNewGame() {
         int numOfPlayers = getNumOfPlayers();
         STgame game = new STgame(numOfPlayers);
