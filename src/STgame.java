@@ -12,6 +12,7 @@ public class STgame {
 
     public STgame (int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
+        deck = new STdeck();
     }
 
     public void selectDealer() {
