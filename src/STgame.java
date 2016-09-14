@@ -9,6 +9,8 @@ public class STgame {
     private int numOfPlayers;
     private STplayer[] players;
     private STdeck deck;
+    private String humanPlayer;
+    private int humanPlayerID;
 
     public STgame (int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
@@ -23,10 +25,22 @@ public class STgame {
 
     public void dealRandomCardsToEachPlayer() {
         players = new STplayer[numOfPlayers];
+        for (int i = 0; i < numOfPlayers; i++) {
+            players[i] = new STplayer("Player ID = " + i);
+        }
+
         for (STplayer player: players) {
             ArrayList<STcard> cards = deck.dealCards(AMOUNT_OF_CARDS_DEALT);
             player.setCards(cards);
         }
 
+    }
+
+    public void assignHumanPlayerID() {
+        humanPlayerID = 1;
+    }
+
+    public STplayer getHumanPlayer() {
+        return players[humanPlayerID];
     }
 }

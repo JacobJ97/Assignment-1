@@ -75,12 +75,19 @@ public class STcard {
 
     public String toString() {
         if (id <= 53) {
-            return ("Card ID: " + id + " | Name: " + cardContents[0] + " | Hardness: " + cardContents[1] + " | Gravity: " +
-                    cardContents[2] + " | Cleavage: " + cardContents[3] + " | Crustal Abundance: " + cardContents[4] +
+            return ("Card ID: " + id +
+                    " | Name: " + cardContents[0] +
+                    " | Hardness: " + cardContents[1] +
+                    " | Gravity: " + cardContents[2] +
+                    " | Cleavage: " + cardContents[3] +
+                    " | Crustal Abundance: " + cardContents[4] +
                     " | Economic Value: " + cardContents[5]);
         }
         else {
-            return (" SUPERTRUMP CARD  |  Card ID: " + id + " | Name: " + cardContents[0] + " | Action: " + cardContents[1]);
+            return ("Card ID: " + id +
+                    " | SUPERTRUMP CARD " +
+                    " | Name: " + cardContents[0] +
+                    " | Action: " + cardContents[1]);
         }
     }
 }

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 /**
  * Created by outba on 9/2/2016.
@@ -21,13 +20,18 @@ public class STdeck {
     }
 
     public ArrayList<STcard> dealCards(int amountOfCardsDealt) {
-        ArrayList<STcard> cardReceived = new ArrayList<STcard>();
+        ArrayList<STcard> cardDealt = new ArrayList<STcard>();
         for (int i = 0; i < amountOfCardsDealt; i++) {
             int idNum = i;
             STcard chosenCard = cards.remove(idNum);
-            cardReceived.add(chosenCard);
-            System.out.println("Card received = " + chosenCard);
+            cardDealt.add(chosenCard);
+            String chosenCardString = chosenCard.toString();
+            //System.out.println(chosenCardString);
+            String chosenCardStringSplitUp[]= chosenCardString.split("[|]");
+            String cardID = chosenCardStringSplitUp[0];
+            //System.out.println(chosenCardStringSplitUp[0]);
+            System.out.println("Card dealt = " + chosenCardStringSplitUp[0]);
         }
-        return cardReceived;
+        return cardDealt;
     }
 }
