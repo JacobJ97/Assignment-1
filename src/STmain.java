@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -11,18 +12,21 @@ public class STmain {
     public static void main(String[] args) {
         int numberOpt;
         STgame game;
-        showMenu();
-        numberOpt = placeInput();
-        switch (numberOpt) {
-            case NEW_GAME: {
-                game = startNewGame();
-                game.startPlayingGame();
-            }
-            case END_GAME: {
-                endGame();
-            }
-            case INSTRUCTIONS: {
-                showInstructions();
+        boolean gameIsOn = true;
+        while (gameIsOn) {
+            showMenu();
+            numberOpt = placeInput();
+            switch (numberOpt) {
+                case NEW_GAME: {
+                    game = startNewGame();
+                    game.startPlayingGame();
+                }
+                case END_GAME: {
+                    endGame();
+                }
+                case INSTRUCTIONS: {
+                    showInstructions();
+                }
             }
         }
     }
@@ -43,13 +47,10 @@ public class STmain {
         System.out.println("To be added.");
         System.out.println("Enter r to return.");
         String value = input.next();
-        while (value != "r") {
+        while (!Objects.equals(value, "r")) {
             System.out.println("Error, try again.");
             System.out.println("Enter r to return.");
             value = input.next();
-        }
-        if (value == "r") {
-            placeInput();
         }
     }
 

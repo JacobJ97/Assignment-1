@@ -9,6 +9,7 @@ public class STgame {
     public static final int THREE_PLAYERS = 3;
     public static final int FOUR_PLAYERS = 4;
     public static final int FIVE_PLAYERS = 5;
+    private int randomNumber;
     private int numOfPlayers;
     private STplayer[] players;
     private STdeck deck;
@@ -26,7 +27,7 @@ public class STgame {
 
     public void selectDealer() {
         Random rand = new Random();
-        int randomNumber = rand.nextInt(numOfPlayers);
+        randomNumber = rand.nextInt(numOfPlayers);
         System.out.println("Player number #" + randomNumber + " was chosen!");
         }
 
@@ -99,8 +100,103 @@ public class STgame {
     }
 
     public void startPlayingGame() {
+        //assign character order
+        String[] characterOrder = new String[0];
+        switch (numOfPlayers) {
+            case THREE_PLAYERS: {
+                characterOrder = new String[3];
+                if (randomNumber == 0) {
+                    characterOrder[0] = "Computer player ID: " + computerPlayer1ID;
+                    characterOrder[1] = "Computer player ID: " + computerPlayer2ID;
+                    characterOrder[2] = "Human player ID: " + humanPlayerID;
+                }
+                if (randomNumber == 1) {
+                    characterOrder[0] = "Computer player ID: " + computerPlayer2ID;
+                    characterOrder[1] = "Human player ID: " + humanPlayerID;
+                    characterOrder[2] = "Computer player ID: " + computerPlayer1ID;
+                }
+                if (randomNumber == 2) {
+                    characterOrder[0] = "Human player ID: " + humanPlayerID;
+                    characterOrder[1] = "Computer player ID: " + computerPlayer1ID;
+                    characterOrder[2] = "Computer player ID: " + computerPlayer2ID;
+                }
+                break;
+            }
+            case FOUR_PLAYERS: {
+                characterOrder = new String[4];
+                if (randomNumber == 0) {
+                    characterOrder[0] = "Computer player ID: " + computerPlayer1ID;
+                    characterOrder[1] = "Computer player ID: " + computerPlayer2ID;
+                    characterOrder[3] = "Computer player ID: " + computerPlayer3ID;
+                    characterOrder[4] = "Human player ID: " + humanPlayerID;
+                }
+                if (randomNumber == 1) {
+                    characterOrder[0] = "Computer player ID: " + computerPlayer2ID;
+                    characterOrder[1] = "Computer player ID: " + computerPlayer3ID;
+                    characterOrder[2] = "Human player ID: " + humanPlayerID;
+                    characterOrder[3] = "Computer player ID: " + computerPlayer1ID;
+                }
+                if (randomNumber == 2) {
+                    characterOrder[0] = "Computer player ID: " + computerPlayer3ID;
+                    characterOrder[1] = "Human player ID: " + humanPlayerID;
+                    characterOrder[2] = "Computer player ID: " + computerPlayer1ID;
+                    characterOrder[3] = "Computer player ID: " + computerPlayer2ID;
+                }
+                if (randomNumber == 3) {
+                    characterOrder[0] = "Human player ID: " + humanPlayerID;
+                    characterOrder[1] = "Computer player ID: " + computerPlayer1ID;
+                    characterOrder[2] = "Computer player ID: " + computerPlayer2ID;
+                    characterOrder[3] = "Computer player ID: " + computerPlayer3ID;
+                }
+                break;
+            }
+            case FIVE_PLAYERS: {
+                characterOrder = new String[5];
+                if (randomNumber == 0) {
+                    characterOrder[0] = "Computer player ID: " + computerPlayer1ID;
+                    characterOrder[1] = "Computer player ID: " + computerPlayer2ID;
+                    characterOrder[2] = "Computer player ID: " + computerPlayer3ID;
+                    characterOrder[3] = "Computer player ID: " + computerPlayer4ID;
+                    characterOrder[4] = "Human player ID: " + humanPlayerID;
+                }
+                if (randomNumber == 1) {
+                    characterOrder[0] = "Computer player ID: " + computerPlayer2ID;
+                    characterOrder[1] = "Computer player ID: " + computerPlayer3ID;
+                    characterOrder[2] = "Computer player ID: " + computerPlayer4ID;
+                    characterOrder[3] = "Human player ID: " + humanPlayerID;
+                    characterOrder[4] = "Computer player ID: " + computerPlayer1ID;
+                }
+                if (randomNumber == 2) {
+                    characterOrder[0] = "Computer player ID: " + computerPlayer3ID;
+                    characterOrder[1] = "Computer player ID: " + computerPlayer4ID;
+                    characterOrder[2] = "Human player ID: " + humanPlayerID;
+                    characterOrder[3] = "Computer player ID: " + computerPlayer1ID;
+                    characterOrder[4] = "Computer player ID: " + computerPlayer2ID;
+                }
+                if (randomNumber == 3) {
+                    characterOrder[0] = "Computer player ID: " + computerPlayer4ID;
+                    characterOrder[1] = "Human player ID: " + humanPlayerID;
+                    characterOrder[2] = "Computer player ID: " + computerPlayer1ID;
+                    characterOrder[3] = "Computer player ID: " + computerPlayer2ID;
+                    characterOrder[4] = "Computer player ID: " + computerPlayer3ID;
+                }
+                if (randomNumber == 4) {
+                    characterOrder[0] = "Human player ID: " + humanPlayerID;
+                    characterOrder[1] = "Computer player ID: " + computerPlayer1ID;
+                    characterOrder[2] = "Computer player ID: " + computerPlayer2ID;
+                    characterOrder[3] = "Computer player ID: " + computerPlayer3ID;
+                    characterOrder[4] = "Computer player ID: " + computerPlayer4ID;
+                }
+                break;
+            }
+        }
         boolean gameIsRunning = true;
+        System.out.println("The player order is: ");
         while (gameIsRunning) {
+            for (int x = 0; x < characterOrder.length; x++) {
+                String characterIDNum = characterOrder[x];
+                System.out.println(characterIDNum);
+            }
             gameIsRunning = false;
         }
     }
