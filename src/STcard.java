@@ -27,7 +27,7 @@ public class STcard {
             "7.5-7.6", "3.9-4.1", "4.7", "19.3", "3.5", "2.2", "2.2", "3.2", "2.3", "4.5", "3.1-3.2", "5-5.3", "2.7",
             "2.9", "3.0", "4.0", "5.2", "5.3", "4.5-5.1", "4.7-4.8", "4.3", "4.0", "6.9-7.1", "2.4", "4.3"};
 
-    private String[] cardCleagage = {"poor/none", "test", "1 perfect, 1 good", "1 perfect, 1 good", "1 perfect", "2 good", "2 good",
+    private String[] cardCleagage = {"poor/none", "1 perfect, 1 good", "1 perfect, 1 good", "1 perfect", "1 perfect", "2 good", "2 good",
             "2 good", "2 poor", "none", "3 good", "2 poor", "2 good", "2 good", "1 perfect", "1 perfect", "1 perfect",
             "1 perfect", "2 good", "1 perfect, 1 good", "1 perfect, 1 good", "1 good", "1 perfect", "2 poor",
             "1 perfect", "1 poor", "2 poor", "none", "2 poor", "3 perfect", "6 perfect", "1 perfect", "none",
@@ -67,14 +67,14 @@ public class STcard {
             cardContents[4] = cardCrustalAbundance[x];
             cardContents[5] = cardEconomicValue[x];
         }
-        if (y > 0) {
+        if (y > -1) {
             cardContents[0] = cardNameSuperTrump[y];
             cardContents[1] = superTrumpCardDesc[y];
         }
     }
 
     public String toString() {
-        if (id <= 53) {
+        if (id <= 54) {
             return ("Card ID: " + id +
                     " | Name: " + cardContents[0] +
                     " | Hardness: " + cardContents[1] +
