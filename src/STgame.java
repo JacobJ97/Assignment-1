@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -100,8 +101,8 @@ public class STgame {
     }
 
     public void startPlayingGame() {
-        //assign character order
         String[] characterOrder = new String[0];
+        int z = 1;
         switch (numOfPlayers) {
             case THREE_PLAYERS: {
                 characterOrder = new String[3];
@@ -127,8 +128,8 @@ public class STgame {
                 if (randomNumber == 0) {
                     characterOrder[0] = "Computer player ID: " + computerPlayer1ID;
                     characterOrder[1] = "Computer player ID: " + computerPlayer2ID;
-                    characterOrder[3] = "Computer player ID: " + computerPlayer3ID;
-                    characterOrder[4] = "Human player ID: " + humanPlayerID;
+                    characterOrder[2] = "Computer player ID: " + computerPlayer3ID;
+                    characterOrder[3] = "Human player ID: " + humanPlayerID;
                 }
                 if (randomNumber == 1) {
                     characterOrder[0] = "Computer player ID: " + computerPlayer2ID;
@@ -192,11 +193,69 @@ public class STgame {
         }
         boolean gameIsRunning = true;
         System.out.println("The player order is: ");
+        for (int x = 0; x < characterOrder.length; x++) {
+            String characterIDNumOrder = characterOrder[x];
+            System.out.println(characterIDNumOrder);
+        }
+
         while (gameIsRunning) {
-            for (int x = 0; x < characterOrder.length; x++) {
-                String characterIDNum = characterOrder[x];
-                System.out.println(characterIDNum);
+            System.out.println("Turn " + z);
+            for (int y = 0; y < characterOrder.length; y++) {
+                String characterIDNumPlay = characterOrder[y];
+                char characterIDNumSingle = characterIDNumPlay.charAt(characterIDNumPlay.length() - 1);
+                //System.out.println(characterIDNumSingle);
+                switch (numOfPlayers) {
+                    case THREE_PLAYERS: {
+
+                        if (characterIDNumSingle == '0') {
+                            System.out.println("Human player's turn.");
+                        }
+                        if (characterIDNumSingle == '1') {
+                            System.out.println("Computer player's 1 turn");
+                        }
+                        if (characterIDNumSingle == '2') {
+                            System.out.println("Computer player's 2 turn");
+                        }
+                        break;
+                    }
+                    case FOUR_PLAYERS: {
+
+                        if (characterIDNumSingle == '0') {
+                            System.out.println("Human player's turn.");
+                        }
+                        if (characterIDNumSingle == '1') {
+                            System.out.println("Computer player's 1 turn");
+                        }
+                        if (characterIDNumSingle == '2') {
+                            System.out.println("Computer player's 2 turn");
+                        }
+                        if (characterIDNumSingle == '3') {
+                            System.out.println("Computer player's 3 turn");
+                        }
+                        break;
+                    }
+                    case FIVE_PLAYERS: {
+
+                        if (characterIDNumSingle == '0') {
+                            System.out.println("Human player's turn.");
+                        }
+                        if (characterIDNumSingle == '1') {
+                            System.out.println("Computer player's 1 turn");
+                        }
+                        if (characterIDNumSingle == '2') {
+                            System.out.println("Computer player's 2 turn");
+                        }
+                        if (characterIDNumSingle == '3') {
+                            System.out.println("Computer player's 3 turn");
+                        }
+                        if (characterIDNumSingle == '4') {
+                            System.out.println("Computer player's 4 turn");
+                        }
+                        break;
+                    }
+                }
             }
+            z++;
             gameIsRunning = false;
         }
     }
