@@ -89,9 +89,55 @@ public class STgame {
     }
 
     public void startPlayingGame() {
-        String[] characterOrder = new String[0];
+        String[] characterOrder;
         boolean gameIsRunning = true;
         int z = 1;
+        characterOrder = determinePlayerOrder();
+        System.out.println(" *** The player order is: *** \n");
+        for (int x = 0; x < characterOrder.length; x++) {
+            String characterIDNumOrder = characterOrder[x];
+            System.out.println(characterIDNumOrder);
+        }
+
+        while (gameIsRunning) {
+            System.out.println("\n *** Turn " + z + " *** \n");
+            for (int y = 0; y < characterOrder.length; y++) {
+                String characterIDNumPlay = characterOrder[y];
+                char characterIDNumSingle = characterIDNumPlay.charAt(characterIDNumPlay.length() - 1);
+                //System.out.println(characterIDNumSingle);
+                if (numOfPlayers >= THREE_PLAYERS) {
+                    if (characterIDNumSingle == '0') {
+                        System.out.println("Human player's turn.");
+                    }
+                    if (characterIDNumSingle == '1') {
+                        System.out.println("Computer player's 1 turn");
+                    }
+                    if (characterIDNumSingle == '2') {
+                        System.out.println("Computer player's 2 turn");
+                    }
+                }
+                if (numOfPlayers >= FOUR_PLAYERS) {
+                    if (characterIDNumSingle == '3') {
+                        System.out.println("Computer player's 3 turn");
+                    }
+
+                }
+                if (numOfPlayers >= FIVE_PLAYERS) {
+                    if (characterIDNumSingle == '4') {
+                        System.out.println("Computer player's 4 turn");
+                    }
+                }
+            }
+            z++;
+            if (z == 10) {
+                gameIsRunning = false;
+            }
+        }
+
+    }
+
+    public String[] determinePlayerOrder() {
+        String[] characterOrder = new String[0];
         switch (numOfPlayers) {
             case THREE_PLAYERS: {
                 characterOrder = new String[3];
@@ -180,50 +226,7 @@ public class STgame {
                 break;
             }
         }
-        System.out.println("The player order is: ");
-        for (int x = 0; x < characterOrder.length; x++) {
-            String characterIDNumOrder = characterOrder[x];
-            System.out.println(characterIDNumOrder);
-        }
-
-        while (gameIsRunning) {
-            System.out.println("Turn " + z);
-            for (int y = 0; y < characterOrder.length; y++) {
-                String characterIDNumPlay = characterOrder[y];
-                char characterIDNumSingle = characterIDNumPlay.charAt(characterIDNumPlay.length() - 1);
-                //System.out.println(characterIDNumSingle);
-                if (numOfPlayers >= THREE_PLAYERS) {
-
-                    if (characterIDNumSingle == '0') {
-                        System.out.println("Human player's turn.");
-                    }
-                    if (characterIDNumSingle == '1') {
-                        System.out.println("Computer player's 1 turn");
-                    }
-                    if (characterIDNumSingle == '2') {
-                        System.out.println("Computer player's 2 turn");
-                    }
-                }
-                if (numOfPlayers >= FOUR_PLAYERS) {
-
-                    if (characterIDNumSingle == '3') {
-                        System.out.println("Computer player's 3 turn");
-                    }
-
-                }
-                if (numOfPlayers >= FIVE_PLAYERS) {
-
-                    if (characterIDNumSingle == '4') {
-                        System.out.println("Computer player's 4 turn");
-                    }
-                }
-            }
-            z++;
-            if (z == 10) {
-                gameIsRunning = false;
-            }
-        }
-
+        return characterOrder;
     }
 }
 
