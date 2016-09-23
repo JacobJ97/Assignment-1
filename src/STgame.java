@@ -21,7 +21,7 @@ public class STgame {
     private int computerPlayer3ID;
     private int computerPlayer4ID;
 
-    public STgame (int numOfPlayers) {
+    public STgame(int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
         deck = new STdeck();
     }
@@ -30,7 +30,7 @@ public class STgame {
         Random rand = new Random();
         randomNumber = rand.nextInt(numOfPlayers);
         System.out.println("Player number #" + randomNumber + " was chosen!");
-        }
+    }
 
     public void dealRandomCardsToEachPlayer() {
         players = new STplayer[numOfPlayers];
@@ -38,7 +38,7 @@ public class STgame {
             players[i] = new STplayer("ID = " + i);
         }
 
-        for (STplayer player: players) {
+        for (STplayer player : players) {
             ArrayList<STcard> cards = deck.dealCards(AMOUNT_OF_CARDS_DEALT);
             player.setCards(cards);
         }
@@ -50,27 +50,15 @@ public class STgame {
     }
 
     public void assignComputerPlayersID() {
-        switch (numOfPlayers) {
-            case THREE_PLAYERS: {
-                computerPlayer1ID = 1;
-                computerPlayer2ID = 2;
-                break;
-            }
-            
-            case FOUR_PLAYERS: {
-                computerPlayer1ID = 1;
-                computerPlayer2ID = 2;
-                computerPlayer3ID = 3;
-                break;
-            }
-            
-            case FIVE_PLAYERS: {
-                computerPlayer1ID = 1;
-                computerPlayer2ID = 2;
-                computerPlayer3ID = 3;
-                computerPlayer4ID = 4;
-                break;
-            }
+        if (numOfPlayers >= THREE_PLAYERS) {
+            computerPlayer1ID = 1;
+            computerPlayer2ID = 2;
+        }
+        if (numOfPlayers >= FOUR_PLAYERS) {
+            computerPlayer3ID = 3;
+        }
+        if (numOfPlayers == FIVE_PLAYERS) {
+            computerPlayer4ID = 4;
         }
     }
 
@@ -102,6 +90,7 @@ public class STgame {
 
     public void startPlayingGame() {
         String[] characterOrder = new String[0];
+        boolean gameIsRunning = true;
         int z = 1;
         switch (numOfPlayers) {
             case THREE_PLAYERS: {
@@ -191,7 +180,6 @@ public class STgame {
                 break;
             }
         }
-        boolean gameIsRunning = true;
         System.out.println("The player order is: ");
         for (int x = 0; x < characterOrder.length; x++) {
             String characterIDNumOrder = characterOrder[x];
@@ -204,59 +192,39 @@ public class STgame {
                 String characterIDNumPlay = characterOrder[y];
                 char characterIDNumSingle = characterIDNumPlay.charAt(characterIDNumPlay.length() - 1);
                 //System.out.println(characterIDNumSingle);
-                switch (numOfPlayers) {
-                    case THREE_PLAYERS: {
+                if (numOfPlayers >= THREE_PLAYERS) {
 
-                        if (characterIDNumSingle == '0') {
-                            System.out.println("Human player's turn.");
-                        }
-                        if (characterIDNumSingle == '1') {
-                            System.out.println("Computer player's 1 turn");
-                        }
-                        if (characterIDNumSingle == '2') {
-                            System.out.println("Computer player's 2 turn");
-                        }
-                        break;
+                    if (characterIDNumSingle == '0') {
+                        System.out.println("Human player's turn.");
                     }
-                    case FOUR_PLAYERS: {
-
-                        if (characterIDNumSingle == '0') {
-                            System.out.println("Human player's turn.");
-                        }
-                        if (characterIDNumSingle == '1') {
-                            System.out.println("Computer player's 1 turn");
-                        }
-                        if (characterIDNumSingle == '2') {
-                            System.out.println("Computer player's 2 turn");
-                        }
-                        if (characterIDNumSingle == '3') {
-                            System.out.println("Computer player's 3 turn");
-                        }
-                        break;
+                    if (characterIDNumSingle == '1') {
+                        System.out.println("Computer player's 1 turn");
                     }
-                    case FIVE_PLAYERS: {
+                    if (characterIDNumSingle == '2') {
+                        System.out.println("Computer player's 2 turn");
+                    }
+                }
+                if (numOfPlayers >= FOUR_PLAYERS) {
 
-                        if (characterIDNumSingle == '0') {
-                            System.out.println("Human player's turn.");
-                        }
-                        if (characterIDNumSingle == '1') {
-                            System.out.println("Computer player's 1 turn");
-                        }
-                        if (characterIDNumSingle == '2') {
-                            System.out.println("Computer player's 2 turn");
-                        }
-                        if (characterIDNumSingle == '3') {
-                            System.out.println("Computer player's 3 turn");
-                        }
-                        if (characterIDNumSingle == '4') {
-                            System.out.println("Computer player's 4 turn");
-                        }
-                        break;
+                    if (characterIDNumSingle == '3') {
+                        System.out.println("Computer player's 3 turn");
+                    }
+
+                }
+                if (numOfPlayers >= FIVE_PLAYERS) {
+
+                    if (characterIDNumSingle == '4') {
+                        System.out.println("Computer player's 4 turn");
                     }
                 }
             }
             z++;
-            gameIsRunning = false;
+            if (z == 10) {
+                gameIsRunning = false;
+            }
         }
+
     }
 }
+
+
