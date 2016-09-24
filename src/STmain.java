@@ -35,7 +35,7 @@ public class STmain {
         Scanner input = new Scanner(System.in);
         System.out.printf("Input your number: ");
         int number = input.nextInt();
-        while (number != 1 && number != 2 && number !=3) {
+        while (number != 1 && number != 2 && number != 3) {
             System.out.printf("You have entered an invalid number. Please enter another number: ");
             number = input.nextInt();
         }
@@ -72,34 +72,19 @@ public class STmain {
     }
 
     private static void gettingComputerPlayers(int numOfPlayers, STgame game) {
-        switch (numOfPlayers) {
-            case 3: {
-                STplayer computerPlayer1 = game.getComputerPlayer1();
-                STplayer computerPlayer2 = game.getComputerPlayer2();
-                showComputer(computerPlayer1);
-                showComputer(computerPlayer2);
-                break;
-            }
-            case 4: {
-                STplayer computerPlayer1 = game.getComputerPlayer1();
-                STplayer computerPlayer2 = game.getComputerPlayer2();
-                STplayer computerPlayer3 = game.getComputerPlayer3();
-                showComputer(computerPlayer1);
-                showComputer(computerPlayer2);
-                showComputer(computerPlayer3);
-                break;
-            }
-            case 5: {
-                STplayer computerPlayer1 = game.getComputerPlayer1();
-                STplayer computerPlayer2 = game.getComputerPlayer2();
-                STplayer computerPlayer3 = game.getComputerPlayer3();
-                STplayer computerPlayer4 = game.getComputerPlayer4();
-                showComputer(computerPlayer1);
-                showComputer(computerPlayer2);
-                showComputer(computerPlayer3);
-                showComputer(computerPlayer4);
-                break;
-            }
+        if (numOfPlayers >= 3) {
+            STplayer computerPlayer1 = game.getComputerPlayer1();
+            STplayer computerPlayer2 = game.getComputerPlayer2();
+            showComputer(computerPlayer1);
+            showComputer(computerPlayer2);
+        }
+        if (numOfPlayers >= 4) {
+            STplayer computerPlayer3 = game.getComputerPlayer3();
+            showComputer(computerPlayer3);
+        }
+        if (numOfPlayers >= 5) {
+            STplayer computerPlayer4 = game.getComputerPlayer4();
+            showComputer(computerPlayer4);
         }
     }
 

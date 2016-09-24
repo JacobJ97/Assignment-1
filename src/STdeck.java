@@ -20,14 +20,14 @@ public class STdeck {
     }
 
     public ArrayList<STcard> dealCards(int amountOfCardsDealt) {
-        ArrayList<STcard> cardDealt = new ArrayList<STcard>();
+        ArrayList<STcard> cardDealt = new ArrayList<>();
         for (int i = 0; i < amountOfCardsDealt; i++) {
             int idNum = i;
             STcard chosenCard = cards.remove(idNum);
             cardDealt.add(chosenCard);
             String chosenCardString = chosenCard.toString();
             //System.out.println(chosenCardString);
-            String chosenCardStringSplitUp[]= chosenCardString.split("[|]");
+            String chosenCardStringSplitUp[] = chosenCardString.split("[|]");
             String cardID = chosenCardStringSplitUp[0];
             //System.out.println(chosenCardStringSplitUp[0]);
             System.out.println("Card dealt = " + chosenCardStringSplitUp[0]);

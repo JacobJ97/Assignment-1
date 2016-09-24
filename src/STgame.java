@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Created by outba on 9/2/2016.
@@ -75,21 +76,16 @@ public class STgame {
     }
 
     public STplayer getComputerPlayer3() {
-        if (numOfPlayers == FOUR_PLAYERS || numOfPlayers == FIVE_PLAYERS) {
-            return players[computerPlayer3ID];
-        }
-        return null;
+        return players[computerPlayer3ID];
     }
 
     public STplayer getComputerPlayer4() {
-        if (numOfPlayers == FIVE_PLAYERS) {
-            return players[computerPlayer4ID];
-        }
-        return null;
+        return players[computerPlayer4ID];
     }
 
     public void startPlayingGame() {
         String[] characterOrder;
+        Scanner input = new Scanner(System.in);
         boolean gameIsRunning = true;
         int z = 1;
         characterOrder = determinePlayerOrder();
@@ -100,6 +96,7 @@ public class STgame {
         }
 
         while (gameIsRunning) {
+            Boolean turnLoop = true;
             System.out.println("\n *** Turn " + z + " *** \n");
             for (int y = 0; y < characterOrder.length; y++) {
                 String characterIDNumPlay = characterOrder[y];
@@ -107,24 +104,63 @@ public class STgame {
                 //System.out.println(characterIDNumSingle);
                 if (numOfPlayers >= THREE_PLAYERS) {
                     if (characterIDNumSingle == '0') {
-                        System.out.println("Human player's turn.");
+                        //System.out.println("Human player's turn.");
+                        while (turnLoop) {
+                            turnLoop = true;
+                            System.out.println("What would you like to do?");
+                            System.out.println("1. See cards");
+                            System.out.println("2. Play card");
+                            System.out.println("3. Pick up");
+                            System.out.printf("I choose >> ");
+                            int playerChoice = input.nextInt();
+                            if (playerChoice == 1) {
+                                System.out.println("1");
+                                System.out.println("");
+                                System.out.println(players[0]);
+                            }
+                            if (playerChoice == 2) {
+                                System.out.println("2");
+                                turnLoop = false;
+                            }
+                            if (playerChoice == 3) {
+                                System.out.println("3");
+                                turnLoop = false;
+                            }
+                        }
                     }
                     if (characterIDNumSingle == '1') {
+                        turnLoop = true;
                         System.out.println("Computer player's 1 turn");
+                        //System.out.println("What would you like to do?");
+                        //System.out.println("1. See cards");
+                        //System.out.println("2. Play cards");
+                        //System.out.println("3. Pick up card (and skip turn)");
                     }
                     if (characterIDNumSingle == '2') {
                         System.out.println("Computer player's 2 turn");
+                        //System.out.println("What would you like to do?");
+                        //System.out.println("1. See cards");
+                        //System.out.println("2. Play cards");
+                        //System.out.println("3. Pick up card (and skip turn)");
                     }
                 }
                 if (numOfPlayers >= FOUR_PLAYERS) {
                     if (characterIDNumSingle == '3') {
                         System.out.println("Computer player's 3 turn");
+                        //System.out.println("What would you like to do?");
+                        //System.out.println("1. See cards");
+                        //System.out.println("2. Play cards");
+                        //System.out.println("3. Pick up card (and skip turn)");
                     }
 
                 }
                 if (numOfPlayers >= FIVE_PLAYERS) {
                     if (characterIDNumSingle == '4') {
                         System.out.println("Computer player's 4 turn");
+                        //System.out.println("What would you like to do?");
+                        //System.out.println("1. See cards");
+                        //System.out.println("2. Play cards");
+                        //System.out.println("3. Pick up card (and skip turn)");
                     }
                 }
             }
