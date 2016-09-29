@@ -121,11 +121,9 @@ public class STgame {
                             }
                             if (playerChoice == 2) {
                                 System.out.println("You are throwing out a card");
-                                System.out.printf("Enter card ID >> ");
-                                int cardIDNum = input.nextInt();
-                                playersChosenCard = findValidCard(cardIDNum);
-                                System.out.printf("");
-                                turnLoop = false;
+                                String playersChosenCard = findValidCard(players[0]);
+                                playersChosenCard = null;
+                                //turnLoop = false;
                             }
                             if (playerChoice == 3) {
                                 System.out.println("You are picking up a card, and passing.");
@@ -133,7 +131,7 @@ public class STgame {
                                 STcard cardPickedUpObject = cardPickedUp.remove(0);
                                 players[0].addCard(cardPickedUpObject);
                                 numOfCardsInDeckLeft++;
-                                turnLoop = false;
+                                //turnLoop = false;
                             }
                         }
                     }
@@ -181,11 +179,51 @@ public class STgame {
 
     }
 
-    private int findValidCard(int cardIDNum) {
+    private String findValidCard(STplayer humanDeck) {
+        int x;
+        Boolean cardValid = true;
+        String idNumSingle;
+        String cardIDNum;
+        String idNumString;
+        Scanner input = new Scanner(System.in);
+        System.out.printf("Enter card ID >> ");
+        cardIDNum = input.next();
+        String humanDeckString = humanDeck.toString();
+        humanDeckString = humanDeckString.replace("\n", "|");
+        humanDeckString = humanDeckString.replace("ID = 0|Your cards are: |[|", "");
+        String humanDeckStringSplitUp[] = humanDeckString.split("[|]");
+        System.out.println(humanDeckStringSplitUp[0]);
+        //idNumString = humanDeckStringSplitUp[0];
 
+        while (cardValid)
+        {
+            for (x = 0; x < humanDeckStringSplitUp.length; x++) {
+                idNumString = humanDeckStringSplitUp[x];
+                System.out.println(idNumString.substring(0, 9));
+                if (Objects.equals(idNumString.substring(0, 9), "Card ID: ")) {
+                    if (Objects.equals(idNumString.substring(10, 11), " ")) {
+                        idNumSingle = idNumString.substring(9, 10);
+                        System.out.println("converted num: " + idNumSingle);
+                    } else {
+                        idNumSingle = idNumString.substring(9, 11);
+                        System.out.println("converted num: " + idNumSingle);
+                    }
+                    if (Objects.equals(idNumSingle, cardIDNum)) {
+
+                        cardValid = false;
+                        return humanDeckStringSplitUp[x];
+                    }
+                }
+            }
+            System.out.println("Match cannot be made. Try again.");
+            System.out.printf("Enter card ID >> ");
+            cardIDNum = input.next();
+
+        }
+        return null;
     }
 
-    public String[] determinePlayerOrder() {
+    private String[] determinePlayerOrder() {
         String[] characterOrder = new String[0];
         switch (numOfPlayers) {
             case THREE_PLAYERS: {
