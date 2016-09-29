@@ -75,7 +75,7 @@ public class STcard {
 
     public String toString() {
         if (id <= 54) {
-            return ("Card ID: " + id +
+            return "\n" + ("Card ID: " + id +
                     " | Name: " + cardContents[0] +
                     " | Hardness: " + cardContents[1] +
                     " | Gravity: " + cardContents[2] +
@@ -84,7 +84,7 @@ public class STcard {
                     " | Economic Value: " + cardContents[5]);
         }
         else {
-            return ("Card ID: " + id +
+            return "\n" + ("Card ID: " + id +
                     " | SUPERTRUMP CARD " +
                     " | Name: " + cardContents[0] +
                     " | Action: " + cardContents[1]);

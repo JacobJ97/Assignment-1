@@ -28,10 +28,21 @@ public class STdeck {
             String chosenCardString = chosenCard.toString();
             //System.out.println(chosenCardString);
             String chosenCardStringSplitUp[] = chosenCardString.split("[|]");
-            String cardID = chosenCardStringSplitUp[0];
             //System.out.println(chosenCardStringSplitUp[0]);
-            System.out.println("Card dealt = " + chosenCardStringSplitUp[0]);
+            System.out.println("Card dealt: " + chosenCardStringSplitUp[0]);
         }
         return cardDealt;
+    }
+
+    public ArrayList<STcard> pickUpCard(int numOfCardsInDeck) {
+        ArrayList<STcard> cardPickedUp = new ArrayList<>();
+        int idNum = numOfCardsInDeck;
+        STcard chosenCard = cards.remove(idNum);
+        cardPickedUp.add(chosenCard);
+        return cardPickedUp;
+    }
+
+    public void throwOutCard(STcard cardThrown) {
+
     }
 }

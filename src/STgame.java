@@ -85,6 +85,7 @@ public class STgame {
 
     public void startPlayingGame() {
         String[] characterOrder;
+        int numOfCardsInDeckLeft = numOfPlayers * 5;
         Scanner input = new Scanner(System.in);
         boolean gameIsRunning = true;
         int z = 1;
@@ -119,11 +120,19 @@ public class STgame {
                                 System.out.println(players[0]);
                             }
                             if (playerChoice == 2) {
-                                System.out.println("2");
+                                System.out.println("You are throwing out a card");
+                                System.out.printf("Enter card ID >> ");
+                                int cardIDNum = input.nextInt();
+                                playersChosenCard = findValidCard(cardIDNum);
+                                System.out.printf("");
                                 turnLoop = false;
                             }
                             if (playerChoice == 3) {
-                                System.out.println("3");
+                                System.out.println("You are picking up a card, and passing.");
+                                ArrayList<STcard> cardPickedUp = deck.pickUpCard(numOfCardsInDeckLeft);
+                                STcard cardPickedUpObject = cardPickedUp.remove(0);
+                                players[0].addCard(cardPickedUpObject);
+                                numOfCardsInDeckLeft++;
                                 turnLoop = false;
                             }
                         }
@@ -169,6 +178,10 @@ public class STgame {
                 gameIsRunning = false;
             }
         }
+
+    }
+
+    private int findValidCard(int cardIDNum) {
 
     }
 

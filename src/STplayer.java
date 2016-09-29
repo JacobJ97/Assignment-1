@@ -16,15 +16,12 @@ public class STplayer {
         this.cards = cards;
     }
 
+    public void addCard(STcard addedCard) {
+        cards.add(addedCard);
+    }
+
     public String toString() {
         return (playerID + "\nYour cards are: \n" +
-                cards.subList(0, 1) + "\n" +
-                cards.subList(1, 2) + "\n" +
-                cards.subList(2, 3) + "\n" +
-                cards.subList(3, 4) + "\n" +
-                cards.subList(4, 5) + "\n" +
-                cards.subList(5, 6) + "\n" +
-                cards.subList(6, 7) + "\n" +
-                cards.subList(7, 8) + "\n");
+                cards);
     }
 }
