@@ -85,7 +85,7 @@ public class STcard {
         }
         else {
             return "\n" + ("Card ID: " + id +
-                    " | SUPERTRUMP CARD " +
+                    " | SUPERTRUMP CARD" +
                     " | Name: " + cardContents[0] +
                     " | Action: " + cardContents[1]);
         }

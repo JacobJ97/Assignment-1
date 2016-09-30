@@ -121,7 +121,7 @@ public class STgame {
                             }
                             if (playerChoice == 2) {
                                 System.out.println("You are throwing out a card");
-                                String playersChosenCard = findValidCard(players[0]);
+                                String[] playersChosenCard = findValidCard(players[0]);
                                 playersChosenCard = null;
                                 //turnLoop = false;
                             }
@@ -179,8 +179,9 @@ public class STgame {
 
     }
 
-    private String findValidCard(STplayer humanDeck) {
+    private String[] findValidCard(STplayer humanDeck) {
         int x;
+        int y = 0;
         Boolean cardValid = true;
         String idNumSingle;
         String cardIDNum;
@@ -209,11 +210,27 @@ public class STgame {
                         System.out.println("converted num: " + idNumSingle);
                     }
                     if (Objects.equals(idNumSingle, cardIDNum)) {
-
-                        cardValid = false;
-                        return humanDeckStringSplitUp[x];
+                        if (Objects.equals(idNumString, "55") || Objects.equals(idNumString, "56") ||
+                                Objects.equals(idNumString, "57") || Objects.equals(idNumString, "58") ||
+                                Objects.equals(idNumString, "59") || Objects.equals(idNumString, "60")) {
+                            String[] cardDetailSuperTrumpArray = new String[4];
+                            for (int z = 0; z < cardDetailSuperTrumpArray.length; z++) {
+                                String cardDetailStuff = humanDeckStringSplitUp[y];
+                                cardDetailSuperTrumpArray[z] = cardDetailStuff;
+                            }
+                            return cardDetailSuperTrumpArray;
+                        }
+                        else {
+                            String[] cardDetailMineralArray = new String[7];
+                            for (int z = 0; z < cardDetailMineralArray.length; z++) {
+                                String cardDetailStuff = humanDeckStringSplitUp[y];
+                                cardDetailMineralArray[z] = cardDetailStuff;
+                            }
+                            return cardDetailMineralArray;
+                        }
                     }
                 }
+                y++;
             }
             System.out.println("Match cannot be made. Try again.");
             System.out.printf("Enter card ID >> ");
