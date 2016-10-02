@@ -44,7 +44,7 @@ public class STcard {
     private String[] cardEconomicValue = {"moderate", "moderate", "moderate", "low", "moderate", "trivial", "low", "low", "low",
             "moderate", "low", "moderate", "trivial", "trivial", "low", "low", "moderate", "high", "moderate",
             "moderate", "low", "low", "trivial", "moderate", "low", "moderate", "moderate", "moderate", "very high",
-            "high", "high", "high", "I'm rich!", "I'm rich!", "moderate", "moderate", "moderate", "high", "moderate",
+            "high", "high", "high", "I am rich!", "I am rich!", "moderate", "moderate", "moderate", "high", "moderate",
             "high", "moderate", "high", "low", "moderate", "moderate", "very high", "high", "high", "moderate", "high",
             "moderate", "high", "high", "moderate"};
 
@@ -80,7 +80,7 @@ public class STcard {
                     " | Hardness: " + cardContents[1] +
                     " | Gravity: " + cardContents[2] +
                     " | Cleavage: " + cardContents[3] +
-                    " | Crustal Abundance: " + cardContents[4] +
+                    " | Crystal Abundance: " + cardContents[4] +
                     " | Economic Value: " + cardContents[5]);
         }
         else {

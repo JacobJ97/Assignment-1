@@ -84,15 +84,21 @@ public class STgame {
     public void startPlayingGame() {
         String[] characterOrder;
         ArrayList<String> pileOfCards = new ArrayList<>();
+        ArrayList<String> humanHand;
+        ArrayList<String> computerOneHand;
+        ArrayList<String> computerTwoHand;
+        ArrayList<String> computerThreeHand;
+        ArrayList<String> computerFourHand;
+        String cardCategory = "";
         int numOfCardsInDeckLeft = numOfPlayers * 5;
         Scanner input = new Scanner(System.in);
         boolean gameIsRunning = true;
         int z = 1;
-        STplayer humanHandClass = players[0];
-        String humanHandString = humanHandClass.toString();
-        humanHandString = humanHandString.replace("ID = 0\nYour cards are: \n[", "");
-        humanHandString = humanHandString.replace("]", "");
-        ArrayList<String> humanHand = new ArrayList<>(Arrays.asList(humanHandString.split(",")));
+        humanHand = setUpHumanHand();
+        computerOneHand = setUpComputerOneHand();
+        computerTwoHand = setUpComputerTwoHand();
+        computerThreeHand = setUpComputerThreeHand();
+        computerFourHand = setUpComputerFourHand();
         characterOrder = determinePlayerOrder();
         System.out.println(" *** The player order is: *** \n");
         for (int x = 0; x < characterOrder.length; x++) {
@@ -138,8 +144,42 @@ public class STgame {
                                         break;
                                     }
                                 }
-                                humanHand.remove(matchingCard);
-                                pileOfCards.add(playersChosenCardID);
+                                Boolean approvedCard = isCardValid(playersChosenCardID, pileOfCards, cardCategory);
+                                if (approvedCard == true) {
+                                    humanHand.remove(matchingCard);
+                                    pileOfCards.add(playersChosenCardID);
+                                    if (pileOfCards.size() == 1) {
+                                        System.out.println("1. Card Hardness");
+                                        System.out.println("2. Card Gravity");
+                                        System.out.println("3. Card Cleagage");
+                                        System.out.println("4. Card Crystal Abundance");
+                                        System.out.println("5. Card Economic Value");
+                                        System.out.printf("Select category >> ");
+                                        int categoryChoice = input.nextInt();
+                                        while (categoryChoice > 1 || categoryChoice < 5) {
+                                            System.out.println("Invalid input! Try again.");
+                                            System.out.printf("Select category >> ");
+                                            categoryChoice = input.nextInt();
+                                        }
+                                        switch (categoryChoice) {
+                                            case 1: {
+                                                cardCategory = "Card Hardness";
+                                            }
+                                            case 2: {
+                                                cardCategory = "Card Gravity";
+                                            }
+                                            case 3: {
+                                                cardCategory = "Card Cleagage";
+                                            }
+                                            case 4: {
+                                                cardCategory = "Card Crystal Abundance";
+                                            }
+                                            case 5: {
+                                                cardCategory = "Card Economic Value";
+                                            }
+                                        }
+                                    }
+                                }
                                 //turnLoop = false;
                             }
                             if (playerChoice == 3) {
@@ -147,8 +187,7 @@ public class STgame {
                                 ArrayList<STcard> cardPickedUp = deck.pickUpCard(numOfCardsInDeckLeft);
                                 STcard cardPickedUpObject = cardPickedUp.remove(0);
                                 String cardDetailsPickedUp = cardPickedUpObject.toString();
-                                System.out.println(cardDetailsPickedUp);
-                                humanHand.add(humanHand.size(), cardDetailsPickedUp);
+                                humanHand.add(cardDetailsPickedUp);
                                 //turnLoop = false;
                             }
                         }
@@ -197,6 +236,143 @@ public class STgame {
 
     }
 
+    private Boolean isCardValid(String cardID, ArrayList<String> pileOfCards, String cardCategory) {
+        if (pileOfCards.size() == 0) {
+            return true;
+        }
+        String cardIDSplit[] = cardID.split("[|]");
+        switch (cardCategory) {
+            case "Card Hardness": {
+                String categoryIndividual = cardIDSplit[2];
+                if (Objects.equals(categoryIndividual.substring(12, 13), " ")) {
+                    String hardnessNum = categoryIndividual.substring(11, 12);
+                }
+                if  (Objects.equals(categoryIndividual.substring(14, 15), " ")) {
+                    String hardnessNum = categoryIndividual.substring(11, 14);
+                }
+                if  (Objects.equals(categoryIndividual.substring(16, 17), " ")) {
+                    String hardnessNum = categoryIndividual.substring(11, 16);
+                }
+                if  (Objects.equals(categoryIndividual.substring(18, 19), " ")) {
+                    String hardnessNum = categoryIndividual.substring(11, 18);
+                }
+            }
+            case "Card Gravity": {
+                String categoryIndividual = cardIDSplit[3];
+                if (Objects.equals(categoryIndividual.substring(13, 14), " ")) {
+                    String gravityNum = categoryIndividual.substring(10, 13);
+                }
+                if (Objects.equals(categoryIndividual.substring(14, 15), " ")) {
+                    String gravityNum = categoryIndividual.substring(10, 14);
+                }
+                if (Objects.equals(categoryIndividual.substring(17, 18), " ")) {
+                    String gravityNum = categoryIndividual.substring(10, 17);
+                }
+            }
+            case "Card Cleagage": {
+                String categoryIndividual = cardIDSplit[4];
+                if (Objects.equals(categoryIndividual.substring(15, 16), " ")) {
+                    String cleavageNum = categoryIndividual.substring(11, 15);
+                }
+                if (Objects.equals(categoryIndividual.substring(17, 18), " ")) {
+                    String cleavageNum = categoryIndividual.substring(11, 17);
+                }
+                if (Objects.equals(categoryIndividual.substring(17, 18), " ")) {
+                    String cleavageNum = categoryIndividual.substring(11, 17);
+                }
+                if (Objects.equals(categoryIndividual.substring(20, 21), " ")) {
+                    String cleavageNum = categoryIndividual.substring(11, 20);
+                }
+                if (Objects.equals(categoryIndividual.substring(25, 26), " ")) {
+                    String cleavageNum = categoryIndividual.substring(11, 25);
+                }
+                if (Objects.equals(categoryIndividual.substring(29, 30), " ")) {
+                    String cleavageNum = categoryIndividual.substring(11, 28);
+                }
+            }
+            case "Card Crystal Abundance": {
+                String categoryIndividual = cardIDSplit[5];
+                if (Objects.equals(categoryIndividual.substring(22, 23), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(20, 22);
+                }
+                if (Objects.equals(categoryIndividual.substring(23, 24), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(20, 23);
+                }
+                if (Objects.equals(categoryIndividual.substring(24, 25), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(20, 24);
+                }
+                if (Objects.equals(categoryIndividual.substring(28, 29), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(20, 28);
+                }
+                if (Objects.equals(categoryIndividual.substring(29, 30), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(20, 29);
+                }
+                if (Objects.equals(categoryIndividual.substring(30, 31), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(20, 30);
+                }
+            }
+            case "Card Economic Value": {
+                String categoryIndividual = cardIDSplit[6];
+                if (Objects.equals(categoryIndividual.substring(19, 20), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(17, 19);
+                }
+                if (Objects.equals(categoryIndividual.substring(20, 21), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(17, 20);
+                }
+                if (Objects.equals(categoryIndividual.substring(23, 24), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(17, 23);
+                }
+                if (Objects.equals(categoryIndividual.substring(24, 25), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(17, 24);
+                }
+                if (Objects.equals(categoryIndividual.substring(25, 26), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(17, 25);
+                }
+                if (Objects.equals(categoryIndividual.substring(26, 27), " ")) {
+                    String crystalAbundanceNum = categoryIndividual.substring(17, 26);
+                }
+            }
+
+        }
+
+        return true;
+    }
+
+    private ArrayList<String> setUpComputerFourHand() {
+        String computerFourHandString = players[4].toString();
+        computerFourHandString = computerFourHandString.replace("ID = 3\nYour cards are: \n[", "");
+        computerFourHandString = computerFourHandString.replace("]", "");
+        return new ArrayList<>(Arrays.asList(computerFourHandString.split(",")));
+    }
+
+    private ArrayList<String> setUpComputerThreeHand() {
+        String computerThreeHandString = players[3].toString();
+        computerThreeHandString = computerThreeHandString.replace("ID = 3\nYour cards are: \n[", "");
+        computerThreeHandString = computerThreeHandString.replace("]", "");
+        return new ArrayList<>(Arrays.asList(computerThreeHandString.split(",")));
+    }
+
+    private ArrayList<String> setUpComputerTwoHand() {
+        String computerTwoHandString = players[2].toString();
+        computerTwoHandString = computerTwoHandString.replace("ID = 2\nYour cards are: \n[", "");
+        computerTwoHandString = computerTwoHandString.replace("]", "");
+        return new ArrayList<>(Arrays.asList(computerTwoHandString.split(",")));
+    }
+
+    private ArrayList<String> setUpComputerOneHand() {
+        String computerOneHandString = players[1].toString();
+        computerOneHandString = computerOneHandString.replace("ID = 1\nYour cards are: \n[", "");
+        computerOneHandString = computerOneHandString.replace("]", "");
+        return new ArrayList<>(Arrays.asList(computerOneHandString.split(",")));
+    }
+
+    private ArrayList<String> setUpHumanHand() {
+        String humanHandString = players[0].toString();
+        humanHandString = humanHandString.replace("ID = 0\nYour cards are: \n[", "");
+        humanHandString = humanHandString.replace("]", "");
+        return new ArrayList<>(Arrays.asList(humanHandString.split(",")));
+    }
+
     private String findValidCard(ArrayList<String> humanDeck) {
         int x;
         int y = 0;
@@ -232,6 +408,12 @@ public class STgame {
                                     cardDetailSuperTrumpArray[z] = cardDetailStuff;
                                 }
                                 String cardDetailSuperTrumpString = Arrays.toString(cardDetailSuperTrumpArray);
+                                cardDetailSuperTrumpString = cardDetailSuperTrumpString.replace(",", "|");
+                                cardDetailSuperTrumpString = cardDetailSuperTrumpString.replace("|  ]", "");
+                                cardDetailSuperTrumpString = cardDetailSuperTrumpString.replace("[", "");
+                                cardDetailSuperTrumpString = cardDetailSuperTrumpString.replace("|  SU", "| SU");
+                                cardDetailSuperTrumpString = cardDetailSuperTrumpString.replace("|  Na", "| Na");
+                                cardDetailSuperTrumpString = cardDetailSuperTrumpString.replace("|  Ac", "| Ac");
                                 return cardDetailSuperTrumpString;
                             } else {
                                 String[] cardDetailMineralArray = new String[7];
