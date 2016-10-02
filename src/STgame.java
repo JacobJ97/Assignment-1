@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by outba on 9/2/2016.
@@ -21,6 +18,7 @@ public class STgame {
     private int computerPlayer2ID;
     private int computerPlayer3ID;
     private int computerPlayer4ID;
+    private int cardCounter = -1;
 
     public STgame(int numOfPlayers) {
         this.numOfPlayers = numOfPlayers;
@@ -85,10 +83,16 @@ public class STgame {
 
     public void startPlayingGame() {
         String[] characterOrder;
+        ArrayList<String> pileOfCards = new ArrayList<>();
         int numOfCardsInDeckLeft = numOfPlayers * 5;
         Scanner input = new Scanner(System.in);
         boolean gameIsRunning = true;
         int z = 1;
+        STplayer humanHandClass = players[0];
+        String humanHandString = humanHandClass.toString();
+        humanHandString = humanHandString.replace("ID = 0\nYour cards are: \n[", "");
+        humanHandString = humanHandString.replace("]", "");
+        ArrayList<String> humanHand = new ArrayList<>(Arrays.asList(humanHandString.split(",")));
         characterOrder = determinePlayerOrder();
         System.out.println(" *** The player order is: *** \n");
         for (int x = 0; x < characterOrder.length; x++) {
@@ -117,20 +121,34 @@ public class STgame {
                             if (playerChoice == 1) {
                                 System.out.println("1");
                                 System.out.println("");
-                                System.out.println(players[0]);
+                                System.out.println(humanHand);
                             }
                             if (playerChoice == 2) {
+                                int matchingCard = 0;
                                 System.out.println("You are throwing out a card");
-                                String[] playersChosenCard = findValidCard(players[0]);
-                                playersChosenCard = null;
+                                String playersChosenCardID = findValidCard(humanHand);
+                                System.out.println(playersChosenCardID);
+                                for (int x = 0; x < humanHand.size(); x++) {
+                                    String ass = humanHand.get(x);
+                                    ass = ass.replace("\n", "");
+                                    ass = ass.replace(" Card", "Card");
+                                    if (Objects.equals(playersChosenCardID, ass)) {
+                                        matchingCard = x;
+                                        System.out.println(matchingCard);
+                                        break;
+                                    }
+                                }
+                                humanHand.remove(matchingCard);
+                                pileOfCards.add(playersChosenCardID);
                                 //turnLoop = false;
                             }
                             if (playerChoice == 3) {
                                 System.out.println("You are picking up a card, and passing.");
                                 ArrayList<STcard> cardPickedUp = deck.pickUpCard(numOfCardsInDeckLeft);
                                 STcard cardPickedUpObject = cardPickedUp.remove(0);
-                                players[0].addCard(cardPickedUpObject);
-                                numOfCardsInDeckLeft++;
+                                String cardDetailsPickedUp = cardPickedUpObject.toString();
+                                System.out.println(cardDetailsPickedUp);
+                                humanHand.add(humanHand.size(), cardDetailsPickedUp);
                                 //turnLoop = false;
                             }
                         }
@@ -179,7 +197,7 @@ public class STgame {
 
     }
 
-    private String[] findValidCard(STplayer humanDeck) {
+    private String findValidCard(ArrayList<String> humanDeck) {
         int x;
         int y = 0;
         Boolean cardValid = true;
@@ -190,43 +208,50 @@ public class STgame {
         System.out.printf("Enter card ID >> ");
         cardIDNum = input.next();
         String humanDeckString = humanDeck.toString();
+        humanDeckString = humanDeckString.replace("[\n", "");
         humanDeckString = humanDeckString.replace("\n", "|");
-        humanDeckString = humanDeckString.replace("ID = 0|Your cards are: |[|", "");
         String humanDeckStringSplitUp[] = humanDeckString.split("[|]");
-        System.out.println(humanDeckStringSplitUp[0]);
-        //idNumString = humanDeckStringSplitUp[0];
 
-        while (cardValid)
-        {
+        while (cardValid) {
             for (x = 0; x < humanDeckStringSplitUp.length; x++) {
                 idNumString = humanDeckStringSplitUp[x];
-                System.out.println(idNumString.substring(0, 9));
                 if (Objects.equals(idNumString.substring(0, 9), "Card ID: ")) {
                     if (Objects.equals(idNumString.substring(10, 11), " ")) {
                         idNumSingle = idNumString.substring(9, 10);
-                        System.out.println("converted num: " + idNumSingle);
                     } else {
                         idNumSingle = idNumString.substring(9, 11);
-                        System.out.println("converted num: " + idNumSingle);
                     }
                     if (Objects.equals(idNumSingle, cardIDNum)) {
-                        if (Objects.equals(idNumString, "55") || Objects.equals(idNumString, "56") ||
-                                Objects.equals(idNumString, "57") || Objects.equals(idNumString, "58") ||
-                                Objects.equals(idNumString, "59") || Objects.equals(idNumString, "60")) {
-                            String[] cardDetailSuperTrumpArray = new String[4];
-                            for (int z = 0; z < cardDetailSuperTrumpArray.length; z++) {
-                                String cardDetailStuff = humanDeckStringSplitUp[y];
-                                cardDetailSuperTrumpArray[z] = cardDetailStuff;
+                        if (Objects.equals(idNumSingle, cardIDNum)) {
+                            if (Objects.equals(idNumString, "55") || Objects.equals(idNumString, "56") ||
+                                    Objects.equals(idNumString, "57") || Objects.equals(idNumString, "58") ||
+                                    Objects.equals(idNumString, "59") || Objects.equals(idNumString, "60")) {
+                                String[] cardDetailSuperTrumpArray = new String[4];
+                                for (int z = 0; z < cardDetailSuperTrumpArray.length; z++) {
+                                    String cardDetailStuff = humanDeckStringSplitUp[y];
+                                    cardDetailSuperTrumpArray[z] = cardDetailStuff;
+                                }
+                                String cardDetailSuperTrumpString = Arrays.toString(cardDetailSuperTrumpArray);
+                                return cardDetailSuperTrumpString;
+                            } else {
+                                String[] cardDetailMineralArray = new String[7];
+                                for (int z = 0; z < cardDetailMineralArray.length; z++) {
+                                    String cardDetailStuff = humanDeckStringSplitUp[y];
+                                    cardDetailMineralArray[z] = cardDetailStuff;
+                                    y++;
+                                }
+                                String cardDetailMineralString = Arrays.toString(cardDetailMineralArray);
+                                cardDetailMineralString = cardDetailMineralString.replace(",", "|");
+                                cardDetailMineralString = cardDetailMineralString.replace("|  ]", "");
+                                cardDetailMineralString = cardDetailMineralString.replace("[", "");
+                                cardDetailMineralString = cardDetailMineralString.replace("|  Na", "| Na");
+                                cardDetailMineralString = cardDetailMineralString.replace("|  Ha", "| Ha");
+                                cardDetailMineralString = cardDetailMineralString.replace("|  Gr", "| Gr");
+                                cardDetailMineralString = cardDetailMineralString.replace("|  Cl", "| Cl");
+                                cardDetailMineralString = cardDetailMineralString.replace("|  Cr", "| Cr");
+                                cardDetailMineralString = cardDetailMineralString.replace("|  Ec", "| Ec");
+                                return cardDetailMineralString;
                             }
-                            return cardDetailSuperTrumpArray;
-                        }
-                        else {
-                            String[] cardDetailMineralArray = new String[7];
-                            for (int z = 0; z < cardDetailMineralArray.length; z++) {
-                                String cardDetailStuff = humanDeckStringSplitUp[y];
-                                cardDetailMineralArray[z] = cardDetailStuff;
-                            }
-                            return cardDetailMineralArray;
                         }
                     }
                 }
@@ -235,9 +260,8 @@ public class STgame {
             System.out.println("Match cannot be made. Try again.");
             System.out.printf("Enter card ID >> ");
             cardIDNum = input.next();
-
         }
-        return null;
+        return "0";
     }
 
     private String[] determinePlayerOrder() {

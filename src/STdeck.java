@@ -42,7 +42,8 @@ public class STdeck {
         return cardPickedUp;
     }
 
-    public void throwOutCard(STcard cardThrown) {
+    public void throwOutCard(String[] cardThrown) {
+        ArrayList<STdeck> thrownOutCard = new ArrayList<>();
 
     }
 }

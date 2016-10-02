@@ -16,10 +16,6 @@ public class STplayer {
         this.cards = cards;
     }
 
-    public void addCard(STcard addedCard) {
-        cards.add(addedCard);
-    }
-
     public String toString() {
         return (playerID + "\nYour cards are: \n" +
                 cards);
