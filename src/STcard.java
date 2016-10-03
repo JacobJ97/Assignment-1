@@ -27,7 +27,7 @@ public class STcard {
             "7.5-7.6", "3.9-4.1", "4.7", "19.3", "3.5", "2.2", "2.2", "3.2", "2.3", "4.5", "3.1-3.2", "5-5.3", "2.7",
             "2.9", "3.0", "4.0", "5.2", "5.3", "4.5-5.1", "4.7-4.8", "4.3", "4.0", "6.9-7.1", "2.4", "4.3"};
 
-    private String[] cardCleagage = {"poor/none", "1 perfect, 1 good", "1 perfect, 1 good", "1 perfect", "1 perfect", "2 good", "2 good",
+    private String[] cardCleavage = {"poor / none", "1 perfect, 1 good", "1 perfect, 1 good", "1 perfect", "1 perfect", "2 good", "2 good",
             "2 good", "2 poor", "none", "3 good", "2 poor", "2 good", "2 good", "1 perfect", "1 perfect", "1 perfect",
             "1 perfect", "2 good", "1 perfect, 1 good", "1 perfect, 1 good", "1 good", "1 perfect", "2 poor",
             "1 perfect", "1 poor", "2 poor", "none", "2 poor", "3 perfect", "6 perfect", "1 perfect", "none",
@@ -53,7 +53,7 @@ public class STcard {
 
     private String[] superTrumpCardDesc = {"Change trump category to 'Economic Value'",
             "Change trump category to 'Crustal Abundance'", "Change trump category to 'Hardness'",
-            "Change trump category to 'Cleavage", "Change trump category to 'Specific Gravity' or throw 'Magnetite'",
+            "Change trump category to 'Cleavage", "Change trump category to 'Specific Gravity'",
             "Change trump category to category of your choice"};
 
 
@@ -63,7 +63,7 @@ public class STcard {
             cardContents[0] = cardName[x];
             cardContents[1] = cardHardness[x];
             cardContents[2] = cardGravity[x];
-            cardContents[3] = cardCleagage[x];
+            cardContents[3] = cardCleavage[x];
             cardContents[4] = cardCrustalAbundance[x];
             cardContents[5] = cardEconomicValue[x];
         }
@@ -80,7 +80,7 @@ public class STcard {
                     " | Hardness: " + cardContents[1] +
                     " | Gravity: " + cardContents[2] +
                     " | Cleavage: " + cardContents[3] +
-                    " | Crystal Abundance: " + cardContents[4] +
+                    " | Crustal Abundance: " + cardContents[4] +
                     " | Economic Value: " + cardContents[5]);
         }
         else {
