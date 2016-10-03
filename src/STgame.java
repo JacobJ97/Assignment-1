@@ -148,49 +148,54 @@ public class STgame {
                                         break;
                                     }
                                 }
-                                if (pileOfCards.size() == 0) {
-                                    System.out.println("1. Card Hardness");
-                                    System.out.println("2. Card Gravity");
-                                    System.out.println("3. Card Cleagage");
-                                    System.out.println("4. Card Crustal Abundance");
-                                    System.out.println("5. Card Economic Value");
-                                    System.out.printf("Select category >> ");
-                                    int categoryChoice = input.nextInt();
-                                    while (categoryChoice < 1 && categoryChoice > 5) {
-                                        System.out.println("Invalid input! Try again.");
+                                if (playersChosenCardID.split("|").length != 4) {
+                                    if (pileOfCards.size() == 0) {
+                                        System.out.println("1. Card Hardness");
+                                        System.out.println("2. Card Gravity");
+                                        System.out.println("3. Card Cleagage");
+                                        System.out.println("4. Card Crustal Abundance");
+                                        System.out.println("5. Card Economic Value");
                                         System.out.printf("Select category >> ");
-                                        categoryChoice = input.nextInt();
-                                    }
-                                    switch (categoryChoice) {
-                                        case 1: {
-                                            cardCategory = "Card Hardness";
-                                            break;
+                                        int categoryChoice = input.nextInt();
+                                        while (categoryChoice < 1 && categoryChoice > 5) {
+                                            System.out.println("Invalid input! Try again.");
+                                            System.out.printf("Select category >> ");
+                                            categoryChoice = input.nextInt();
                                         }
-                                        case 2: {
-                                            cardCategory = "Card Gravity";
-                                            break;
-                                        }
-                                        case 3: {
-                                            cardCategory = "Card Cleavage";
-                                            break;
-                                        }
-                                        case 4: {
-                                            cardCategory = "Card Crustal Abundance";
-                                            break;
-                                        }
-                                        case 5: {
-                                            cardCategory = "Card Economic Value";
-                                            break;
+                                        switch (categoryChoice) {
+                                            case 1: {
+                                                cardCategory = "Card Hardness";
+                                                break;
+                                            }
+                                            case 2: {
+                                                cardCategory = "Card Gravity";
+                                                break;
+                                            }
+                                            case 3: {
+                                                cardCategory = "Card Cleavage";
+                                                break;
+                                            }
+                                            case 4: {
+                                                cardCategory = "Card Crustal Abundance";
+                                                break;
+                                            }
+                                            case 5: {
+                                                cardCategory = "Card Economic Value";
+                                                break;
+                                            }
                                         }
                                     }
                                 }
                                 String[] approvedCard = isCardValid(playersChosenCardID, cardCategory, previousCardNum);
                                 boolean booleanCard;
-                                assert approvedCard != null;
-                                if (Objects.equals(approvedCard[1], "SUPERTRUMP CARD")) {
+                                //assert approvedCard != null;
+                                if (Objects.equals(approvedCard[2], "SUPERTRUMP CARD")) {
                                     cardCategory = approvedCard[0];
                                     booleanCard = Boolean.valueOf(approvedCard[1]);
-                                } else {
+                                    previousCardNum = 0;
+                                    previousCardNumArray.add(previousCardNum);
+                                }
+                                else {
                                     String booleanString = approvedCard[0];
                                     String previousCardNumString = approvedCard[1];
                                     previousCardNum = Double.parseDouble(previousCardNumString);
@@ -222,10 +227,7 @@ public class STgame {
                     if (characterIDNumSingle == '1') {
                         turnLoop = true;
                         System.out.println("Computer player's 1 turn");
-                        //System.out.println("What would you like to do?");
-                        //System.out.println("1. See cards");
-                        //System.out.println("2. Play cards");
-                        //System.out.println("3. Pick up card (and skip turn)");
+
                     }
                     if (characterIDNumSingle == '2') {
                         System.out.println("Computer player's 2 turn");
@@ -265,349 +267,44 @@ public class STgame {
 
     private String[] isCardValid(String cardID, String cardCategory, double previousCardNum) {
         String cardIDSplit[] = cardID.split("[|]");
-        switch (cardCategory) {
-            case "Card Hardness": {
-                String categoryIndividual = cardIDSplit[2];
-                if (Objects.equals(categoryIndividual.substring(12, 13), " ")) {
-                    String hardnessNum = categoryIndividual.substring(11, 12);
-                    System.out.println(hardnessNum);
-                    System.out.println();
-                    int hardnessInt = Integer.parseInt(hardnessNum);
-                    boolean booleanResult = hardnessInt >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = hardnessInt;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(14, 15), " ")) {
-                    String hardnessNum = categoryIndividual.substring(11, 14);
-                    double hardnessDouble = Double.parseDouble(hardnessNum);
-                    boolean booleanResult = hardnessDouble >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = hardnessDouble;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(16, 17), " ")) {
-                    String hardnessNum = categoryIndividual.substring(11, 16);
-                    String hardnessSum = hardnessNum.replace("-", " ");
-                    String hardnessSumArray[] = hardnessSum.split(" ");
-                    String hardnessSumOne = hardnessSumArray[0];
-                    double num1 = Double.parseDouble(hardnessSumOne);
-                    String hardnessSumTwo = hardnessSumArray[1];
-                    double num2 = Double.parseDouble(hardnessSumTwo);
-                    double hardnessNumTotalAverage = (num1 + num2) / 2;
-                    boolean booleanResult = hardnessNumTotalAverage >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = hardnessNumTotalAverage;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(18, 19), " ")) {
-                    String hardnessNum = categoryIndividual.substring(11, 18);
-                    String hardnessSum = hardnessNum.replace("-", " ");
-                    String hardnessSumArray[] = hardnessSum.split(" ");
-                    String hardnessSumOne = hardnessSumArray[0];
-                    double num1 = Double.parseDouble(hardnessSumOne);
-                    String hardnessSumTwo = hardnessSumArray[1];
-                    double num2 = Double.parseDouble(hardnessSumTwo);
-                    double hardnessNumTotalAverage = (num1 + num2) / 2;
-                    boolean booleanResult = hardnessNumTotalAverage >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = hardnessNumTotalAverage;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-
-            }
-            case "Card Gravity": {
-                String categoryIndividual = cardIDSplit[3];
-                if (Objects.equals(categoryIndividual.substring(13, 14), " ")) {
-                    String gravityNum = categoryIndividual.substring(10, 13);
-                    double gravityNumDouble = Double.parseDouble(gravityNum);
-                    boolean booleanResult = gravityNumDouble >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = gravityNumDouble;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(14, 15), " ")) {
-                    String gravityNum = categoryIndividual.substring(10, 14);
-                    double gravityNumDouble = Double.parseDouble(gravityNum);
-                    boolean booleanResult = gravityNumDouble >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = gravityNumDouble;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(17, 18), " ")) {
-                    String gravityNum = categoryIndividual.substring(10, 17);
-                    String gravitySum = gravityNum.replace("-", " ");
-                    String gravitySumArray[] = gravitySum.split(" ");
-                    String gravitySumOne = gravitySumArray[0];
-                    double num1 = Double.parseDouble(gravitySumOne);
-                    String gravitySumTwo = gravitySumArray[1];
-                    double num2 = Double.parseDouble(gravitySumTwo);
-                    double gravityNumTotalAverage = (num1 + num2) / 2;
-                    boolean booleanResult = gravityNumTotalAverage >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = gravityNumTotalAverage;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-            }
-            case "Card Cleavage": {
-                String categoryIndividual = cardIDSplit[4];
-                if (Objects.equals(categoryIndividual.substring(15, 16), " ")) {
-                    //String cleavageString = categoryIndividual.substring(11, 15);
-                    int cleavageNum = 1;
-                    boolean booleanResult;
-                    if (cleavageNum >= previousCardNum) booleanResult = true;
-                    else booleanResult = false;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = cleavageNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(17, 18), " ")) {
-                    String cleavageString = categoryIndividual.substring(11, 17);
-                    String[] cleavageArray = cleavageString.split(" ");
-                    String cleavageStringNum = cleavageArray[0];
-                    int cleavageInt = Integer.parseInt(cleavageStringNum);
-                    String cleavageCondition = cleavageArray[1];
-                    if (Objects.equals(cleavageCondition, "Poor")) {
-                        int cleavageNum = 3 + cleavageInt;
-                        boolean booleanResult = cleavageNum >= previousCardNum;
-                        String booleanString = Boolean.toString(booleanResult);
-                        previousCardNum = cleavageNum;
-                        String previousCardString = Double.toString(previousCardNum);
-                        return new String[]{booleanString, previousCardString};
-                    }
-                    if (Objects.equals(cleavageCondition, "Good")) {
-                        int cleavageNum = 4 + cleavageInt;
-                        boolean booleanResult = cleavageNum >= previousCardNum;
-                        String booleanString = Boolean.toString(booleanResult);
-                        previousCardNum = cleavageNum;
-                        String previousCardString = Double.toString(previousCardNum);
-                        return new String[]{booleanString, previousCardString};
-                    }
-                }
-                if (Objects.equals(categoryIndividual.substring(20, 21), " ")) {
-                    String cleavageString = categoryIndividual.substring(11, 20);
-                    String[] cleavageArray = cleavageString.split(" ");
-                    String cleavageStringNum = cleavageArray[0];
-                    int cleavageInt = Integer.parseInt(cleavageStringNum);
-                    String cleavageCondition = cleavageArray[1];
-                    if (Objects.equals(cleavageCondition, "Perfect")) {
-                        int cleavageNum = 50 + cleavageInt;
-                        boolean booleanResult = cleavageNum >= previousCardNum;
-                        String booleanString = Boolean.toString(booleanResult);
-                        previousCardNum = cleavageNum;
-                        String previousCardString = Double.toString(previousCardNum);
-                        return new String[]{booleanString, previousCardString};
-                    }
-                }
-                if (Objects.equals(categoryIndividual.substring(22, 23), " ")) {
-                    //String cleavageString = categoryIndividual.substring(11, 22);
-                    int cleavageNum = 2;
-                    boolean booleanResult;
-                    if (cleavageNum >= previousCardNum) booleanResult = true;
-                    else booleanResult = false;
-                    String booleanString;
-                    booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = cleavageNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(25, 26), " ")) {
-                    String cleavageString = categoryIndividual.substring(11, 25);
-                    String[] cleavageArrayWhole = cleavageString.split(",");
-                    String[] cleavageArraySplitOne = cleavageArrayWhole[0].split(" ");
-                    String[] cleavageArraySplitTwo = cleavageArrayWhole[1].split(" ");
-                    String cleavageStringNumOne = cleavageArraySplitOne[0];
-                    int cleavageIntOne = Integer.parseInt(cleavageStringNumOne);
-                    String cleavageConditionOne = cleavageArraySplitOne[1];
-                    //String cleavageStringNumTwo = cleavageArraySplitTwo[0];
-                    //int cleavageIntTwo = Integer.parseInt(cleavageStringNumTwo);
-                    String cleavageConditionTwo = cleavageArraySplitTwo[1];
-                    if (Objects.equals(cleavageConditionOne, "Good")) {
-                        if (Objects.equals(cleavageConditionTwo, "Poor")) {
-                            double cleavageNum = (4 + cleavageIntOne) + .5;
-                            boolean booleanResult = cleavageNum >= previousCardNum;
-                            String booleanString = Boolean.toString(booleanResult);
-                            previousCardNum = cleavageNum;
-                            String previousCardString = Double.toString(previousCardNum);
-                            return new String[]{booleanString, previousCardString};
-                        }
-                    }
-                }
-                if (Objects.equals(categoryIndividual.substring(29, 30), " ")) {
-                    String cleavageString = categoryIndividual.substring(11, 28);
-                    String[] cleavageArrayWhole = cleavageString.split(",");
-                    String[] cleavageArraySplitOne = cleavageArrayWhole[0].split(" ");
-                    String[] cleavageArraySplitTwo = cleavageArrayWhole[1].split(" ");
-                    String cleavageStringNumOne = cleavageArraySplitOne[0];
-                    int cleavageIntOne = Integer.parseInt(cleavageStringNumOne);
-                    String cleavageConditionOne = cleavageArraySplitOne[1];
-                    String cleavageStringNumTwo = cleavageArraySplitTwo[0];
-                    int cleavageIntTwo = Integer.parseInt(cleavageStringNumTwo);
-                    String cleavageConditionTwo = cleavageArraySplitTwo[1];
-                    if (Objects.equals(cleavageConditionOne, "Perfect")) {
-                        if (Objects.equals(cleavageConditionTwo, "Good")) {
-                            double cleavageNum = (50 + (10 + cleavageIntOne)) + (cleavageIntTwo);
-                            boolean booleanResult = cleavageNum >= previousCardNum;
-                            String booleanString = Boolean.toString(booleanResult);
-                            previousCardNum = cleavageNum;
-                            String previousCardString = Double.toString(previousCardNum);
-                            return new String[]{booleanString, previousCardString};
-                        }
-                    }
-                }
-            }
-            case "Card Crustal Abundance": {
-                String categoryIndividual = cardIDSplit[5];
-                if (Objects.equals(categoryIndividual.substring(22, 23), " ")) {
-                    //String crustalAbundanceString = categoryIndividual.substring(20, 22);
-                    int crustalAbundanceNum = 3;
-                    boolean booleanResult;
-                    if (crustalAbundanceNum >= previousCardNum) booleanResult = true;
-                    else booleanResult = false;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = crustalAbundanceNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(23, 24), " ")) {
-                    //String crustalAbundanceString = categoryIndividual.substring(20, 23);
-                    int crustalAbundanceNum = 5;
-                    boolean booleanResult;
-                    if (crustalAbundanceNum >= previousCardNum) booleanResult = true;
-                    else booleanResult = false;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = crustalAbundanceNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(24, 25), " ")) {
-                    //String crustalAbundanceString = categoryIndividual.substring(20, 24);
-                    int crustalAbundanceNum = 2;
-                    boolean booleanResult = crustalAbundanceNum >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = crustalAbundanceNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(28, 29), " ")) {
-                    //String crustalAbundanceString = categoryIndividual.substring(20, 28);
-                    int crustalAbundanceNum = 4;
-                    boolean booleanResult = crustalAbundanceNum >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = crustalAbundanceNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(29, 30), " ")) {
-                    //String crustalAbundanceString = categoryIndividual.substring(20, 29);
-                    int crustalAbundanceNum = 6;
-                    boolean booleanResult;
-                    if (crustalAbundanceNum >= previousCardNum) booleanResult = true;
-                    else booleanResult = false;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = crustalAbundanceNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(30, 31), " ")) {
-                    //String crustalAbundanceString = categoryIndividual.substring(20, 30);
-                    int crustalAbundanceNum = 1;
-                    boolean booleanResult = crustalAbundanceNum >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = crustalAbundanceNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-            }
-            case "Card Economic Value": {
-                String categoryIndividual = cardIDSplit[6];
-                if (Objects.equals(categoryIndividual.substring(19, 20), " ")) {
-                    int economicValueNum = 2;
-                    boolean booleanResult = economicValueNum >= previousCardNum;
-                    String booleanString;
-                    booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = economicValueNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(20, 21), " ")) {
-                    //String economicValueString = categoryIndividual.substring(17, 20);
-                    int economicValueNum = 4;
-                    boolean booleanResult = economicValueNum >= previousCardNum;
-                    String booleanString;
-                    booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = economicValueNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(23, 24), " ")) {
-                    //String economicValueString = categoryIndividual.substring(17, 23);
-                    int economicValueNum = 1;
-                    boolean booleanResult = economicValueNum >= previousCardNum;
-                    String booleanString;
-                    booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = economicValueNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(24, 25), " ")) {
-                    //String economicValueString = categoryIndividual.substring(17, 24);
-                    int economicValueNum = 3;
-                    boolean booleanResult = economicValueNum >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = economicValueNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(25, 26), " ")) {
-                    //String economicValueString = categoryIndividual.substring(17, 25);
-                    int economicValueNum = 5;
-                    boolean booleanResult = economicValueNum >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = economicValueNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-                if (Objects.equals(categoryIndividual.substring(26, 27), " ")) {
-                    //String economicValueString = categoryIndividual.substring(17, 26);
-                    int economicValueNum = 6;
-                    boolean booleanResult = economicValueNum >= previousCardNum;
-                    String booleanString = Boolean.toString(booleanResult);
-                    previousCardNum = economicValueNum;
-                    String previousCardString = Double.toString(previousCardNum);
-                    return new String[]{booleanString, previousCardString};
-                }
-            }
-        }
+        System.out.println(cardIDSplit[1]);
+        System.out.println(cardIDSplit[2]);
         if (Objects.equals(cardIDSplit[1], " SUPERTRUMP CARD ")) {
             String[] superTrumpArray = new String[3];
             if (Objects.equals(cardIDSplit[2], " Name: The Miner ")) {
                 cardCategory = "Card Economic Value";
                 superTrumpArray[0] = cardCategory;
+                superTrumpArray[1] = "true";
+                superTrumpArray[2] = "SUPERTRUMP CARD";
+                return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Petrologist ")) {
                 cardCategory = "Card Crustal Abundance";
                 superTrumpArray[0] = cardCategory;
+                superTrumpArray[1] = "true";
+                superTrumpArray[2] = "SUPERTRUMP CARD";
+                return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Gemmologist ")) {
                 cardCategory = "Card Hardness";
                 superTrumpArray[0] = cardCategory;
+                superTrumpArray[1] = "true";
+                superTrumpArray[2] = "SUPERTRUMP CARD";
+                return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Mineralogist ")) {
                 cardCategory = "Card Cleavage";
                 superTrumpArray[0] = cardCategory;
+                superTrumpArray[1] = "true";
+                superTrumpArray[2] = "SUPERTRUMP CARD";
+                return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Geophysicist ")) {
                 cardCategory = "Specific Gravity";
                 superTrumpArray[0] = cardCategory;
+                superTrumpArray[1] = "true";
+                superTrumpArray[2] = "SUPERTRUMP CARD";
+                return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Geologist ")) {
                 System.out.println("1. Card Hardness");
@@ -627,32 +324,368 @@ public class STgame {
                     case 1: {
                         cardCategory = "Card Hardness";
                         superTrumpArray[0] = cardCategory;
-                        break;
+                        superTrumpArray[1] = "true";
+                        superTrumpArray[2] = "SUPERTRUMP CARD";
+                        return superTrumpArray;
                     }
                     case 2: {
                         cardCategory = "Card Gravity";
                         superTrumpArray[0] = cardCategory;
-                        break;
+                        superTrumpArray[1] = "true";
+                        superTrumpArray[2] = "SUPERTRUMP CARD";
+                        return superTrumpArray;
                     }
                     case 3: {
                         cardCategory = "Card Cleavage";
                         superTrumpArray[0] = cardCategory;
-                        break;
+                        superTrumpArray[1] = "true";
+                        superTrumpArray[2] = "SUPERTRUMP CARD";
+                        return superTrumpArray;
                     }
                     case 4: {
                         cardCategory = "Card Crustal Abundance";
                         superTrumpArray[0] = cardCategory;
-                        break;
+                        superTrumpArray[1] = "true";
+                        superTrumpArray[2] = "SUPERTRUMP CARD";
+                        return superTrumpArray;
                     }
                     case 5: {
                         cardCategory = "Card Economic Value";
                         superTrumpArray[0] = cardCategory;
-                        break;
+                        superTrumpArray[1] = "true";
+                        superTrumpArray[2] = "SUPERTRUMP CARD";
+                        return superTrumpArray;
                     }
                 }
-                superTrumpArray[1] = "true";
-                superTrumpArray[2] = "SUPERTRUMP CARD";
-                return superTrumpArray;
+            }
+        }
+        switch (cardCategory) {
+            case "Card Hardness": {
+                String categoryIndividual = cardIDSplit[2];
+                if (Objects.equals(categoryIndividual.substring(12, 13), " ")) {
+                    String hardnessNum = categoryIndividual.substring(11, 12);
+                    int hardnessInt = Integer.parseInt(hardnessNum);
+                    boolean booleanResult = hardnessInt >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = hardnessInt;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(13, 14), " ")) {
+                    String hardnessNum = categoryIndividual.substring(11, 13);
+                    int hardnessInt = Integer.parseInt(hardnessNum);
+                    boolean booleanResult = hardnessInt >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = hardnessInt;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "b"};
+                }
+                if (Objects.equals(categoryIndividual.substring(14, 15), " ")) {
+                    String hardnessNum = categoryIndividual.substring(11, 14);
+                    double hardnessDouble = Double.parseDouble(hardnessNum);
+                    boolean booleanResult = hardnessDouble >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = hardnessDouble;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "b"};
+                }
+                if (Objects.equals(categoryIndividual.substring(16, 17), " ")) {
+                    String hardnessNum = categoryIndividual.substring(11, 16);
+                    String hardnessSum = hardnessNum.replace("-", " ");
+                    String hardnessSumArray[] = hardnessSum.split(" ");
+                    String hardnessSumOne = hardnessSumArray[0];
+                    double num1 = Double.parseDouble(hardnessSumOne);
+                    String hardnessSumTwo = hardnessSumArray[1];
+                    double num2 = Double.parseDouble(hardnessSumTwo);
+                    double hardnessNumTotalAverage = (num1 + num2) / 2;
+                    boolean booleanResult = hardnessNumTotalAverage >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = hardnessNumTotalAverage;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(18, 19), " ")) {
+                    String hardnessNum = categoryIndividual.substring(11, 18);
+                    String hardnessSum = hardnessNum.replace("-", " ");
+                    String hardnessSumArray[] = hardnessSum.split(" ");
+                    String hardnessSumOne = hardnessSumArray[0];
+                    double num1 = Double.parseDouble(hardnessSumOne);
+                    String hardnessSumTwo = hardnessSumArray[1];
+                    double num2 = Double.parseDouble(hardnessSumTwo);
+                    double hardnessNumTotalAverage = (num1 + num2) / 2;
+                    boolean booleanResult = hardnessNumTotalAverage >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = hardnessNumTotalAverage;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+
+            }
+            case "Card Gravity": {
+                String categoryIndividual = cardIDSplit[3];
+                if (Objects.equals(categoryIndividual.substring(13, 14), " ")) {
+                    String gravityNum = categoryIndividual.substring(11, 13);
+                    double gravityNumDouble = Double.parseDouble(gravityNum);
+                    boolean booleanResult = gravityNumDouble >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = gravityNumDouble;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(14, 15), " ")) {
+                    String gravityNum = categoryIndividual.substring(11, 14);
+                    double gravityNumDouble = Double.parseDouble(gravityNum);
+                    boolean booleanResult = gravityNumDouble >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = gravityNumDouble;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(17, 18), " ")) {
+                    String gravityNum = categoryIndividual.substring(11, 17);
+                    String gravitySum = gravityNum.replace("-", " ");
+                    String gravitySumArray[] = gravitySum.split(" ");
+                    String gravitySumOne = gravitySumArray[0];
+                    double num1 = Double.parseDouble(gravitySumOne);
+                    String gravitySumTwo = gravitySumArray[1];
+                    double num2 = Double.parseDouble(gravitySumTwo);
+                    double gravityNumTotalAverage = (num1 + num2) / 2;
+                    boolean booleanResult = gravityNumTotalAverage >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = gravityNumTotalAverage;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+            }
+            case "Card Cleavage": {
+                String categoryIndividual = cardIDSplit[4];
+                if (Objects.equals(categoryIndividual.substring(15, 16), " ")) {
+                    //String cleavageString = categoryIndividual.substring(11, 15);
+                    int cleavageNum = 1;
+                    boolean booleanResult;
+                    if (cleavageNum >= previousCardNum) booleanResult = true;
+                    else booleanResult = false;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = cleavageNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(17, 18), " ")) {
+                    String cleavageString = categoryIndividual.substring(11, 17);
+                    String[] cleavageArray = cleavageString.split(" ");
+                    String cleavageStringNum = cleavageArray[0];
+                    int cleavageInt = Integer.parseInt(cleavageStringNum);
+                    String cleavageCondition = cleavageArray[1];
+                    if (Objects.equals(cleavageCondition, "poor")) {
+                        int cleavageNum = 3 + cleavageInt;
+                        boolean booleanResult = cleavageNum >= previousCardNum;
+                        String booleanString = Boolean.toString(booleanResult);
+                        previousCardNum = cleavageNum;
+                        String previousCardString = Double.toString(previousCardNum);
+                        return new String[]{booleanString, previousCardString, "a"};
+                    }
+                    if (Objects.equals(cleavageCondition, "good")) {
+                        int cleavageNum = 4 + cleavageInt;
+                        boolean booleanResult = cleavageNum >= previousCardNum;
+                        String booleanString = Boolean.toString(booleanResult);
+                        previousCardNum = cleavageNum;
+                        String previousCardString = Double.toString(previousCardNum);
+                        return new String[]{booleanString, previousCardString, "a"};
+                    }
+                }
+                if (Objects.equals(categoryIndividual.substring(20, 21), " ")) {
+                    String cleavageString = categoryIndividual.substring(11, 20);
+                    String[] cleavageArray = cleavageString.split(" ");
+                    String cleavageStringNum = cleavageArray[0];
+                    int cleavageInt = Integer.parseInt(cleavageStringNum);
+                    String cleavageCondition = cleavageArray[1];
+                    if (Objects.equals(cleavageCondition, "perfect")) {
+                        int cleavageNum = 50 + cleavageInt;
+                        boolean booleanResult = cleavageNum >= previousCardNum;
+                        String booleanString = Boolean.toString(booleanResult);
+                        previousCardNum = cleavageNum;
+                        String previousCardString = Double.toString(previousCardNum);
+                        return new String[]{booleanString, previousCardString, "a"};
+                    }
+                }
+                if (Objects.equals(categoryIndividual.substring(22, 23), " ")) {
+                    //String cleavageString = categoryIndividual.substring(11, 22);
+                    int cleavageNum = 2;
+                    boolean booleanResult;
+                    if (cleavageNum >= previousCardNum) booleanResult = true;
+                    else booleanResult = false;
+                    String booleanString;
+                    booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = cleavageNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(23, 24), " ")) {
+                    String cleavageString = categoryIndividual.substring(11, 23);
+                    String[] cleavageArrayWhole = cleavageString.split("[-]");
+                    String[] cleavageArraySplitOne = cleavageArrayWhole[0].split(" ");
+                    String[] cleavageArraySplitTwo = cleavageArrayWhole[1].split(" ");
+                    String cleavageStringNumOne = cleavageArraySplitOne[0];
+                    int cleavageIntOne = Integer.parseInt(cleavageStringNumOne);
+                    String cleavageConditionOne = cleavageArraySplitOne[1];
+                    //String cleavageStringNumTwo = cleavageArraySplitTwo[0];
+                    //int cleavageIntTwo = Integer.parseInt(cleavageStringNumTwo);
+                    String cleavageConditionTwo = cleavageArraySplitTwo[1];
+                    if (Objects.equals(cleavageConditionOne, "Good")) {
+                        if (Objects.equals(cleavageConditionTwo, "Poor")) {
+                            double cleavageNum = (4 + cleavageIntOne) + .5;
+                            boolean booleanResult = cleavageNum >= previousCardNum;
+                            String booleanString = Boolean.toString(booleanResult);
+                            previousCardNum = cleavageNum;
+                            String previousCardString = Double.toString(previousCardNum);
+                            return new String[]{booleanString, previousCardString, "a"};
+                        }
+                    }
+                }
+                if (Objects.equals(categoryIndividual.substring(26, 27), " ")) {
+                    String cleavageString = categoryIndividual.substring(11, 26);
+                    String[] cleavageArrayWhole = cleavageString.split("[-]");
+                    String[] cleavageArraySplitOne = cleavageArrayWhole[0].split(" ");
+                    String[] cleavageArraySplitTwo = cleavageArrayWhole[1].split(" ");
+                    String cleavageStringNumOne = cleavageArraySplitOne[0];
+                    int cleavageIntOne = Integer.parseInt(cleavageStringNumOne);
+                    String cleavageConditionOne = cleavageArraySplitOne[1];
+                    String cleavageStringNumTwo = cleavageArraySplitTwo[0];
+                    int cleavageIntTwo = Integer.parseInt(cleavageStringNumTwo);
+                    String cleavageConditionTwo = cleavageArraySplitTwo[1];
+                    if (Objects.equals(cleavageConditionOne, "Perfect")) {
+                        if (Objects.equals(cleavageConditionTwo, "Good")) {
+                            double cleavageNum = (50 + (10 + cleavageIntOne)) + (cleavageIntTwo);
+                            boolean booleanResult = cleavageNum >= previousCardNum;
+                            String booleanString = Boolean.toString(booleanResult);
+                            previousCardNum = cleavageNum;
+                            String previousCardString = Double.toString(previousCardNum);
+                            return new String[]{booleanString, previousCardString, "a"};
+                        }
+                    }
+                }
+            }
+            case "Card Crustal Abundance": {
+                String categoryIndividual = cardIDSplit[5];
+                if (Objects.equals(categoryIndividual.substring(22, 23), " ")) {
+                    //String crustalAbundanceString = categoryIndividual.substring(20, 22);
+                    int crustalAbundanceNum = 3;
+                    boolean booleanResult;
+                    if (crustalAbundanceNum >= previousCardNum) booleanResult = true;
+                    else booleanResult = false;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = crustalAbundanceNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(23, 24), " ")) {
+                    //String crustalAbundanceString = categoryIndividual.substring(20, 23);
+                    int crustalAbundanceNum = 5;
+                    boolean booleanResult;
+                    if (crustalAbundanceNum >= previousCardNum) booleanResult = true;
+                    else booleanResult = false;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = crustalAbundanceNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(24, 25), " ")) {
+                    //String crustalAbundanceString = categoryIndividual.substring(20, 24);
+                    int crustalAbundanceNum = 2;
+                    boolean booleanResult = crustalAbundanceNum >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = crustalAbundanceNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(28, 29), " ")) {
+                    //String crustalAbundanceString = categoryIndividual.substring(20, 28);
+                    int crustalAbundanceNum = 4;
+                    boolean booleanResult = crustalAbundanceNum >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = crustalAbundanceNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(29, 30), " ")) {
+                    //String crustalAbundanceString = categoryIndividual.substring(20, 29);
+                    int crustalAbundanceNum = 6;
+                    boolean booleanResult;
+                    if (crustalAbundanceNum >= previousCardNum) booleanResult = true;
+                    else booleanResult = false;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = crustalAbundanceNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(30, 31), " ")) {
+                    //String crustalAbundanceString = categoryIndividual.substring(20, 30);
+                    int crustalAbundanceNum = 1;
+                    boolean booleanResult = crustalAbundanceNum >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = crustalAbundanceNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+            }
+            case "Card Economic Value": {
+                String categoryIndividual = cardIDSplit[6];
+                System.out.println(cardIDSplit[6]);
+                if (Objects.equals(categoryIndividual.substring(19, 20), " ")) {
+                    int economicValueNum = 2;
+                    boolean booleanResult = economicValueNum >= previousCardNum;
+                    String booleanString;
+                    booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = economicValueNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(21, 22), " ")) {
+                    int economicValueNum = 4;
+                    boolean booleanResult = economicValueNum >= previousCardNum;
+                    String booleanString;
+                    booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = economicValueNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(23, 24), " ")) {
+                    //String economicValueString = categoryIndividual.substring(17, 23);
+                    int economicValueNum = 1;
+                    boolean booleanResult = economicValueNum >= previousCardNum;
+                    String booleanString;
+                    booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = economicValueNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(24, 25), " ")) {
+                    //String economicValueString = categoryIndividual.substring(17, 24);
+                    int economicValueNum = 3;
+                    boolean booleanResult = economicValueNum >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = economicValueNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(25, 26), " ")) {
+                    //String economicValueString = categoryIndividual.substring(17, 25);
+                    int economicValueNum = 5;
+                    boolean booleanResult = economicValueNum >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = economicValueNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
+                if (Objects.equals(categoryIndividual.substring(26, 27), " ")) {
+                    //String economicValueString = categoryIndividual.substring(17, 26);
+                    int economicValueNum = 6;
+                    boolean booleanResult = economicValueNum >= previousCardNum;
+                    String booleanString = Boolean.toString(booleanResult);
+                    previousCardNum = economicValueNum;
+                    String previousCardString = Double.toString(previousCardNum);
+                    return new String[]{booleanString, previousCardString, "a"};
+                }
             }
         }
         return null;
@@ -698,8 +731,8 @@ public class STgame {
         int y = 0;
         Boolean cardValid = true;
         String idNumSingle;
-        String cardIDNum;
         String idNumString;
+        String cardIDNum;
         Scanner input = new Scanner(System.in);
         System.out.printf("Enter card ID >> ");
         cardIDNum = input.next();
@@ -711,6 +744,7 @@ public class STgame {
         while (cardValid) {
             for (x = 0; x < humanDeckStringSplitUp.length; x++) {
                 idNumString = humanDeckStringSplitUp[x];
+                System.out.println(idNumString);
                 if (Objects.equals(idNumString.substring(0, 9), "Card ID: ")) {
                     if (Objects.equals(idNumString.substring(10, 11), " ")) {
                         idNumSingle = idNumString.substring(9, 10);
@@ -719,13 +753,14 @@ public class STgame {
                     }
                     if (Objects.equals(idNumSingle, cardIDNum)) {
                         if (Objects.equals(idNumSingle, cardIDNum)) {
-                            if (Objects.equals(idNumString, "55") || Objects.equals(idNumString, "56") ||
-                                    Objects.equals(idNumString, "57") || Objects.equals(idNumString, "58") ||
-                                    Objects.equals(idNumString, "59") || Objects.equals(idNumString, "60")) {
+                            if (Objects.equals(idNumSingle, "55") || Objects.equals(idNumSingle, "56") ||
+                                    Objects.equals(idNumSingle, "57") || Objects.equals(idNumSingle, "58") ||
+                                    Objects.equals(idNumSingle, "59") || Objects.equals(idNumSingle, "60")) {
                                 String[] cardDetailSuperTrumpArray = new String[4];
                                 for (int z = 0; z < cardDetailSuperTrumpArray.length; z++) {
                                     String cardDetailStuff = humanDeckStringSplitUp[y];
                                     cardDetailSuperTrumpArray[z] = cardDetailStuff;
+                                    y++;
                                 }
                                 String cardDetailSuperTrumpString = Arrays.toString(cardDetailSuperTrumpArray);
                                 cardDetailSuperTrumpString = cardDetailSuperTrumpString.replace(",", "|");
@@ -744,7 +779,7 @@ public class STgame {
                                 }
                                 String cardDetailMineralString = Arrays.toString(cardDetailMineralArray);
                                 cardDetailMineralString = cardDetailMineralString.replace(",", "|");
-                                cardDetailMineralString = cardDetailMineralString.replace("|  ]", "");
+                                cardDetailMineralString = cardDetailMineralString.replace(" |  ]", " ");
                                 cardDetailMineralString = cardDetailMineralString.replace("[", "");
                                 cardDetailMineralString = cardDetailMineralString.replace("|  Na", "| Na");
                                 cardDetailMineralString = cardDetailMineralString.replace("|  Ha", "| Ha");
@@ -762,6 +797,7 @@ public class STgame {
             System.out.println("Match cannot be made. Try again.");
             System.out.printf("Enter card ID >> ");
             cardIDNum = input.next();
+            y = 0;
         }
         return "0";
     }
