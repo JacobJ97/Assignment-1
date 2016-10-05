@@ -41,9 +41,4 @@ public class STdeck {
         cardPickedUp.add(chosenCard);
         return cardPickedUp;
     }
-
-    public void throwOutCard(String[] cardThrown) {
-        ArrayList<STdeck> thrownOutCard = new ArrayList<>();
-
-    }
 }

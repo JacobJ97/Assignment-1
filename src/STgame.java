@@ -87,8 +87,8 @@ public class STgame {
         ArrayList<String> humanHand;
         ArrayList<String> computerOneHand;
         ArrayList<String> computerTwoHand;
-        ArrayList<String> computerThreeHand;
-        ArrayList<String> computerFourHand;
+        ArrayList<String> computerThreeHand = null;
+        ArrayList<String> computerFourHand = null;
         String cardCategory = "";
         int numOfCardsInDeckLeft = numOfPlayers * 5;
         Scanner input = new Scanner(System.in);
@@ -136,7 +136,7 @@ public class STgame {
                             if (playerChoice == 2) {
                                 int matchingCard = 0;
                                 System.out.println("You are throwing out a card");
-                                String playersChosenCardID = findValidCard(humanHand);
+                                String playersChosenCardID = findValidCardHuman(humanHand);
                                 System.out.println(playersChosenCardID);
                                 String retrievedCardDetails = "";
                                 for (int x = 0; x < humanHand.size(); x++) {
@@ -188,14 +188,13 @@ public class STgame {
                                 }
                                 String[] approvedCard = isCardValid(playersChosenCardID, cardCategory, previousCardNum);
                                 boolean booleanCard;
-                                //assert approvedCard != null;
+                                assert approvedCard != null;
                                 if (Objects.equals(approvedCard[2], "SUPERTRUMP CARD")) {
                                     cardCategory = approvedCard[0];
                                     booleanCard = Boolean.valueOf(approvedCard[1]);
                                     previousCardNum = 0;
                                     previousCardNumArray.add(previousCardNum);
-                                }
-                                else {
+                                } else {
                                     String booleanString = approvedCard[0];
                                     String previousCardNumString = approvedCard[1];
                                     previousCardNum = Double.parseDouble(previousCardNumString);
@@ -225,45 +224,194 @@ public class STgame {
                         }
                     }
                     if (characterIDNumSingle == '1') {
-                        turnLoop = true;
                         System.out.println("Computer player's 1 turn");
-
+                        if (pileOfCards.size() == 0) {
+                            Random random = new Random();
+                            int randCategoryChoice = random.nextInt(5) + 1;
+                            switch (randCategoryChoice) {
+                                case 1: {
+                                    cardCategory = "Card Hardness";
+                                    System.out.println("Computer 1 changed category to Hardness.");
+                                    break;
+                                }
+                                case 2: {
+                                    cardCategory = "Card Gravity";
+                                    System.out.println("Computer 1 changed category to Specific Gravity.");
+                                    break;
+                                }
+                                case 3: {
+                                    cardCategory = "Card Cleavage";
+                                    System.out.println("Computer 1 changed category to Cleavage.");
+                                    break;
+                                }
+                                case 4: {
+                                    cardCategory = "Card Crustal Abundance";
+                                    System.out.println("Computer 1 changed category to Crustal Abundance.");
+                                    break;
+                                }
+                                case 5: {
+                                    cardCategory = "Card Economic Value";
+                                    System.out.println("Computer 1 changed category to Economic Value.");
+                                    break;
+                                }
+                            }
+                        }
+                        String[] computersChosenIDCard = findValidCardComputer(computerOneHand, cardCategory,
+                                previousCardNum);
+                        String previousCardNumString = computersChosenIDCard[0];
+                        previousCardNum = Double.parseDouble(previousCardNumString);
+                        String cardArrayPositionString = computersChosenIDCard[1];
+                        int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
+                        String chosenCardFinal = computerFourHand.get(cardArrayPosition);
+                        humanHand.remove(cardArrayPosition);
+                        pileOfCards.add(chosenCardFinal);
                     }
                     if (characterIDNumSingle == '2') {
                         System.out.println("Computer player's 2 turn");
-                        //System.out.println("What would you like to do?");
-                        //System.out.println("1. See cards");
-                        //System.out.println("2. Play cards");
-                        //System.out.println("3. Pick up card (and skip turn)");
+                        if (pileOfCards.size() == 0) {
+                            Random random = new Random();
+                            int randCategoryChoice = random.nextInt(5) + 1;
+                            switch (randCategoryChoice) {
+                                case 1: {
+                                    cardCategory = "Card Hardness";
+                                    System.out.println("Computer 2 changed category to Hardness.");
+                                    break;
+                                }
+                                case 2: {
+                                    cardCategory = "Card Gravity";
+                                    System.out.println("Computer 2 changed category to Specific Gravity.");
+                                    break;
+                                }
+                                case 3: {
+                                    cardCategory = "Card Cleavage";
+                                    System.out.println("Computer 2 changed category to Cleavage.");
+                                    break;
+                                }
+                                case 4: {
+                                    cardCategory = "Card Crustal Abundance";
+                                    System.out.println("Computer 2 changed category to Crustal Abundance.");
+                                    break;
+                                }
+                                case 5: {
+                                    cardCategory = "Card Economic Value";
+                                    System.out.println("Computer 2 changed category to Economic Value.");
+                                    break;
+                                }
+                            }
+                        }
+                        String[] computersChosenIDCard = findValidCardComputer(computerTwoHand, cardCategory,
+                                previousCardNum);
+                        String previousCardNumString = computersChosenIDCard[0];
+                        previousCardNum = Double.parseDouble(previousCardNumString);
+                        String cardArrayPositionString = computersChosenIDCard[1];
+                        int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
+                        String chosenCardFinal = computerFourHand.get(cardArrayPosition);
+                        humanHand.remove(cardArrayPosition);
+                        pileOfCards.add(chosenCardFinal);
                     }
-                }
-                if (numOfPlayers >= FOUR_PLAYERS) {
-                    if (characterIDNumSingle == '3') {
-                        System.out.println("Computer player's 3 turn");
-                        //System.out.println("What would you like to do?");
-                        //System.out.println("1. See cards");
-                        //System.out.println("2. Play cards");
-                        //System.out.println("3. Pick up card (and skip turn)");
+                    if (numOfPlayers >= FOUR_PLAYERS) {
+                        if (characterIDNumSingle == '3') {
+                            System.out.println("Computer player's 3 turn");
+                            if (pileOfCards.size() == 0) {
+                                Random random = new Random();
+                                int randCategoryChoice = random.nextInt(5) + 1;
+                                switch (randCategoryChoice) {
+                                    case 1: {
+                                        cardCategory = "Card Hardness";
+                                        System.out.println("Computer 3 changed category to Hardness.");
+                                        break;
+                                    }
+                                    case 2: {
+                                        cardCategory = "Card Gravity";
+                                        System.out.println("Computer 3 changed category to Specific Gravity.");
+                                        break;
+                                    }
+                                    case 3: {
+                                        cardCategory = "Card Cleavage";
+                                        System.out.println("Computer 3 changed category to Cleavage.");
+                                        break;
+                                    }
+                                    case 4: {
+                                        cardCategory = "Card Crustal Abundance";
+                                        System.out.println("Computer 3 changed category to Crustal Abundance.");
+                                        break;
+                                    }
+                                    case 5: {
+                                        cardCategory = "Card Economic Value";
+                                        System.out.println("Computer 3 changed category to Economic Value.");
+                                        break;
+                                    }
+                                }
+                            }
+                            String[] computersChosenIDCard = findValidCardComputer(computerThreeHand, cardCategory,
+                                    previousCardNum);
+                            String previousCardNumString = computersChosenIDCard[0];
+                            previousCardNum = Double.parseDouble(previousCardNumString);
+                            String cardArrayPositionString = computersChosenIDCard[1];
+                            int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
+                            String chosenCardFinal = computerFourHand.get(cardArrayPosition);
+                            humanHand.remove(cardArrayPosition);
+                            pileOfCards.add(chosenCardFinal);
+                        }
                     }
 
                 }
                 if (numOfPlayers >= FIVE_PLAYERS) {
                     if (characterIDNumSingle == '4') {
                         System.out.println("Computer player's 4 turn");
-                        //System.out.println("What would you like to do?");
-                        //System.out.println("1. See cards");
-                        //System.out.println("2. Play cards");
-                        //System.out.println("3. Pick up card (and skip turn)");
+                        if (pileOfCards.size() == 0) {
+                            Random random = new Random();
+                            int randCategoryChoice = random.nextInt(5) + 1;
+                            switch (randCategoryChoice) {
+                                case 1: {
+                                    cardCategory = "Card Hardness";
+                                    System.out.println("Computer 4 changed category to Hardness.");
+                                    break;
+                                }
+                                case 2: {
+                                    cardCategory = "Card Gravity";
+                                    System.out.println("Computer 4 changed category to Specific Gravity.");
+                                    break;
+                                }
+                                case 3: {
+                                    cardCategory = "Card Cleavage";
+                                    System.out.println("Computer 4 changed category to Cleavage.");
+                                    break;
+                                }
+                                case 4: {
+                                    cardCategory = "Card Crustal Abundance";
+                                    System.out.println("Computer 4 changed category to Crustal Abundance.");
+                                    break;
+                                }
+                                case 5: {
+                                    cardCategory = "Card Economic Value";
+                                    System.out.println("Computer 4 changed category to Economic Value.");
+                                    break;
+                                }
+                            }
+                        }
+                        String[] computersChosenIDCard = findValidCardComputer(computerFourHand, cardCategory,
+                                previousCardNum);
+                        if (Objects.equals(computersChosenIDCard[1], " SUPERTRUMP CARD ")) {
+
+                        }
+                        String previousCardNumString = computersChosenIDCard[0];
+                        previousCardNum = Double.parseDouble(previousCardNumString);
+                        String cardArrayPositionString = computersChosenIDCard[1];
+                        int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
+                        String chosenCardFinal = computerFourHand.get(cardArrayPosition);
+                        humanHand.remove(cardArrayPosition);
+                        pileOfCards.add(chosenCardFinal);
                     }
                 }
             }
-            z++;
-            if (z == 10) {
-                gameIsRunning = false;
-            }
         }
-
+        z++;
+        if (z == 10) {
+            gameIsRunning = false;
+        }
     }
+
 
     private String[] isCardValid(String cardID, String cardCategory, double previousCardNum) {
         String cardIDSplit[] = cardID.split("[|]");
@@ -500,7 +648,7 @@ public class STgame {
                     int cleavageInt = Integer.parseInt(cleavageStringNum);
                     String cleavageCondition = cleavageArray[1];
                     if (Objects.equals(cleavageCondition, "perfect")) {
-                        int cleavageNum = 50 + cleavageInt;
+                        int cleavageNum = 10 + cleavageInt;
                         boolean booleanResult = cleavageNum >= previousCardNum;
                         String booleanString = Boolean.toString(booleanResult);
                         previousCardNum = cleavageNum;
@@ -555,7 +703,7 @@ public class STgame {
                     String cleavageConditionTwo = cleavageArraySplitTwo[1];
                     if (Objects.equals(cleavageConditionOne, "Perfect")) {
                         if (Objects.equals(cleavageConditionTwo, "Good")) {
-                            double cleavageNum = (50 + (10 + cleavageIntOne)) + (cleavageIntTwo);
+                            double cleavageNum = (10 + (2 + cleavageIntOne)) + (cleavageIntTwo);
                             boolean booleanResult = cleavageNum >= previousCardNum;
                             String booleanString = Boolean.toString(booleanResult);
                             previousCardNum = cleavageNum;
@@ -726,7 +874,7 @@ public class STgame {
         return new ArrayList<>(Arrays.asList(humanHandString.split(",")));
     }
 
-    private String findValidCard(ArrayList<String> humanDeck) {
+    private String findValidCardHuman(ArrayList<String> humanDeck) {
         int x;
         int y = 0;
         Boolean cardValid = true;
@@ -801,6 +949,297 @@ public class STgame {
         }
         return "0";
     }
+
+    private String[] findValidCardComputer(ArrayList<String> computerDeck, String cardCategory, double previousCardNum) {
+        int x;
+        int y = 0;
+        int z = 0;
+        int w = 0;
+        int s = 0;
+        int t = 0;
+        int u = 0;
+        boolean cardValid = true;
+        double totalDifference = 0;
+        String idNumSingle;
+        String[] idNumSingleArray = new String[computerDeck.size()];
+        String idNumString;
+        String[] categoryDetailArray = new String[computerDeck.size()];
+        String[] computerDeckArray = new String[7];
+        String[] computerDeckArrayCollection = new String[computerDeck.size()];
+        String[] idNumSuperTrumpArrayCollection = new String[computerDeck.size()];
+        String[] computerCardDetails = new String[computerDeck.size()];
+        String[] idNumSuperTrumpArray = new String[4];
+        double[] totalDifferenceArray = new double[computerDeck.size()];
+        String computerDeckString = computerDeck.toString();
+        computerDeckString = computerDeckString.replace("[\n", "");
+        computerDeckString = computerDeckString.replace("\n", "|");
+        computerDeckString = computerDeckString.replace(",", "");
+        computerDeckString = computerDeckString.replace("]", "");
+        String computerDeckStringSplitUp[] = computerDeckString.split("[|]");
+        for (x = 0; x < computerDeckStringSplitUp.length; x++) {
+            idNumString = computerDeckStringSplitUp[x];
+            if (Objects.equals(idNumString, "Card ID: 55 ") || Objects.equals(idNumString, "Card ID: 56 ") ||
+                    Objects.equals(idNumString, "Card ID: 57 ") || Objects.equals(idNumString, "Card ID: 58 ") ||
+                    Objects.equals(idNumString, "Card ID: 59 ") || Objects.equals(idNumString, "Card ID: 60 ")) {
+                idNumSuperTrumpArray[s] = computerDeckStringSplitUp[x];
+                s++;
+                if (s == 4) {
+                    s = 0;
+                    idNumSuperTrumpArrayCollection[t] = Arrays.toString(idNumSuperTrumpArray);
+                    t++;
+                }
+            }
+            if (!(s >= 1)) {
+                s = 0;
+                computerDeckArray[y] = idNumString;
+                y++;
+                if (y == 7) {
+                    y = 0;
+                    computerDeckArrayCollection[w] = Arrays.toString(computerDeckArray);
+                    w++;
+                }
+            }
+        }
+        if (Objects.equals(cardCategory, "Card Hardness")) {
+            u = 2;
+        }
+        if (Objects.equals(cardCategory, "Card Gravity")) {
+            u = 3;
+        }
+        if (Objects.equals(cardCategory, "Card Cleavage")) {
+            u = 4;
+        }
+        if (Objects.equals(cardCategory, "Card Crustal Abundance")) {
+            u = 5;
+        }
+        if (Objects.equals(cardCategory, "Card Economic Value")) {
+            u = 6;
+        }
+        for (x = 0; x < (computerDeckArrayCollection.length - idNumSuperTrumpArrayCollection.length); x++) {
+            System.out.println(computerDeckArrayCollection[x]);
+            String computerDeckDetails = computerDeckArrayCollection[x];
+            computerCardDetails = computerDeckDetails.split(",");
+            String categoryDetail = computerCardDetails[u];
+            categoryDetailArray[x] = categoryDetail;
+        }
+        for (x = 0; x < categoryDetailArray.length; x++) {
+            String cardCategorySingle = categoryDetailArray[x];
+            System.out.println(cardCategorySingle);
+            if (y == 2) {
+                if (Objects.equals(cardCategorySingle.substring(13, 14), " ")) {
+                    String hardnessNum = cardCategorySingle.substring(12, 13);
+                    int hardnessInt = Integer.parseInt(hardnessNum);
+                    totalDifference = hardnessInt - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(14, 15), " ")) {
+                    String hardnessNum = cardCategorySingle.substring(12, 14);
+                    int hardnessInt = Integer.parseInt(hardnessNum);
+                    totalDifference = hardnessInt - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(15, 16), " ")) {
+                    String hardnessNum = cardCategorySingle.substring(12, 15);
+                    double hardnessDouble = Double.parseDouble(hardnessNum);
+                    totalDifference = hardnessDouble - previousCardNum;
+
+                }
+                if (Objects.equals(cardCategorySingle.substring(17, 18), " ")) {
+                    String hardnessNum = cardCategorySingle.substring(12, 17);
+                    String hardnessSum = hardnessNum.replace("-", " ");
+                    String hardnessSumArray[] = hardnessSum.split(" ");
+                    String hardnessSumOne = hardnessSumArray[0];
+                    double num1 = Double.parseDouble(hardnessSumOne);
+                    String hardnessSumTwo = hardnessSumArray[1];
+                    double num2 = Double.parseDouble(hardnessSumTwo);
+                    double hardnessNumTotalAverage = (num1 + num2) / 2;
+                    totalDifference = hardnessNumTotalAverage - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(19, 20), " ")) {
+                    String hardnessNum = cardCategorySingle.substring(12, 19);
+                    String hardnessSum = hardnessNum.replace("-", " ");
+                    String hardnessSumArray[] = hardnessSum.split(" ");
+                    String hardnessSumOne = hardnessSumArray[0];
+                    double num1 = Double.parseDouble(hardnessSumOne);
+                    String hardnessSumTwo = hardnessSumArray[1];
+                    double num2 = Double.parseDouble(hardnessSumTwo);
+                    double hardnessNumTotalAverage = (num1 + num2) / 2;
+                    totalDifference = hardnessNumTotalAverage - previousCardNum;
+                }
+            }
+            if (y == 3) {
+                if (Objects.equals(cardCategorySingle.substring(14, 15), " ")) {
+                    String gravityNum = cardCategorySingle.substring(12, 14);
+                    double gravityNumDouble = Double.parseDouble(gravityNum);
+                    totalDifference = gravityNumDouble - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(15, 16), " ")) {
+                    String gravityNum = cardCategorySingle.substring(12, 15);
+                    double gravityNumDouble = Double.parseDouble(gravityNum);
+                    totalDifference = gravityNumDouble - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(18, 19), " ")) {
+                    String gravityNum = cardCategorySingle.substring(12, 18);
+                    String gravitySum = gravityNum.replace("-", " ");
+                    String gravitySumArray[] = gravitySum.split(" ");
+                    String gravitySumOne = gravitySumArray[0];
+                    double num1 = Double.parseDouble(gravitySumOne);
+                    String gravitySumTwo = gravitySumArray[1];
+                    double num2 = Double.parseDouble(gravitySumTwo);
+                    double gravityNumTotalAverage = (num1 + num2) / 2;
+                    totalDifference = gravityNumTotalAverage - previousCardNum;
+                }
+            }
+            if (y == 4) {
+                if (Objects.equals(cardCategorySingle.substring(16, 17), " ")) {
+                    int cleavageNum = 1;
+                    totalDifference = cleavageNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(18, 19), " ")) {
+                    String cleavageString = cardCategorySingle.substring(12, 18);
+                    String[] cleavageArray = cleavageString.split(" ");
+                    String cleavageStringNum = cleavageArray[0];
+                    int cleavageInt = Integer.parseInt(cleavageStringNum);
+                    String cleavageCondition = cleavageArray[1];
+                    if (Objects.equals(cleavageCondition, "poor")) {
+                        int cleavageNum = 3 + cleavageInt;
+                        totalDifference = cleavageNum - previousCardNum;
+                    }
+                    if (Objects.equals(cleavageCondition, "good")) {
+                        int cleavageNum = 4 + cleavageInt;
+                        totalDifference = cleavageNum - previousCardNum;
+                    }
+                }
+                if (Objects.equals(cardCategorySingle.substring(21, 22), " ")) {
+                    String cleavageString = cardCategorySingle.substring(12, 21);
+                    String[] cleavageArray = cleavageString.split(" ");
+                    String cleavageStringNum = cleavageArray[0];
+                    int cleavageInt = Integer.parseInt(cleavageStringNum);
+                    String cleavageCondition = cleavageArray[1];
+                    if (Objects.equals(cleavageCondition, "perfect")) {
+                        int cleavageNum = 10 + cleavageInt;
+                        totalDifference = cleavageNum - previousCardNum;
+                    }
+                }
+                if (Objects.equals(cardCategorySingle.substring(23, 24), " ")) {
+                    //String cleavageString = cardCategorySingle.substring(11, 22);
+                    int cleavageNum = 2;
+                    totalDifference = cleavageNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(24, 25), " ")) {
+                    String cleavageString = cardCategorySingle.substring(11, 24);
+                    String[] cleavageArrayWhole = cleavageString.split("[-]");
+                    String[] cleavageArraySplitOne = cleavageArrayWhole[0].split(" ");
+                    String[] cleavageArraySplitTwo = cleavageArrayWhole[1].split(" ");
+                    String cleavageStringNumOne = cleavageArraySplitOne[0];
+                    int cleavageIntOne = Integer.parseInt(cleavageStringNumOne);
+                    String cleavageConditionOne = cleavageArraySplitOne[1];
+                    String cleavageConditionTwo = cleavageArraySplitTwo[1];
+                    if (Objects.equals(cleavageConditionOne, "Good")) {
+                        if (Objects.equals(cleavageConditionTwo, "Poor")) {
+                            double cleavageNum = (4 + cleavageIntOne) + .5;
+                            totalDifference = cleavageNum - previousCardNum;
+
+                        }
+                    }
+                }
+                if (Objects.equals(cardCategorySingle.substring(27, 28), " ")) {
+                    String cleavageString = cardCategorySingle.substring(11, 27);
+                    String[] cleavageArrayWhole = cleavageString.split("[-]");
+                    String[] cleavageArraySplitOne = cleavageArrayWhole[0].split(" ");
+                    String[] cleavageArraySplitTwo = cleavageArrayWhole[1].split(" ");
+                    String cleavageStringNumOne = cleavageArraySplitOne[0];
+                    int cleavageIntOne = Integer.parseInt(cleavageStringNumOne);
+                    String cleavageConditionOne = cleavageArraySplitOne[1];
+                    String cleavageStringNumTwo = cleavageArraySplitTwo[0];
+                    int cleavageIntTwo = Integer.parseInt(cleavageStringNumTwo);
+                    String cleavageConditionTwo = cleavageArraySplitTwo[1];
+                    if (Objects.equals(cleavageConditionOne, "Perfect")) {
+                        if (Objects.equals(cleavageConditionTwo, "Good")) {
+                            double cleavageNum = (10 + (2 + cleavageIntOne)) + (cleavageIntTwo);
+                            totalDifference = cleavageNum - previousCardNum;
+                        }
+                    }
+                }
+            }
+            if (y == 5) {
+                if (Objects.equals(cardCategorySingle.substring(23, 24), " ")) {
+                    //String crustalAbundanceString = cardCategorySingle.substring(20, 22);
+                    int crustalAbundanceNum = 3;
+                    totalDifference = crustalAbundanceNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(24, 25), " ")) {
+                    //String crustalAbundanceString = cardCategorySingle.substring(20, 23);
+                    int crustalAbundanceNum = 5;
+                    totalDifference = crustalAbundanceNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(25, 26), " ")) {
+                    //String crustalAbundanceString = cardCategorySingle.substring(20, 24);
+                    int crustalAbundanceNum = 2;
+                    totalDifference = crustalAbundanceNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(29, 30), " ")) {
+                    //String crustalAbundanceString = cardCategorySingle.substring(20, 28);
+                    int crustalAbundanceNum = 4;
+                    totalDifference = crustalAbundanceNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(30, 31), " ")) {
+                    //String crustalAbundanceString = cardCategorySingle.substring(20, 29);
+                    int crustalAbundanceNum = 6;
+                    totalDifference = crustalAbundanceNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(31, 32), " ")) {
+                    //String crustalAbundanceString = cardCategorySingle.substring(20, 30);
+                    int crustalAbundanceNum = 1;
+                    totalDifference = crustalAbundanceNum - previousCardNum;
+                }
+            }
+            if (y == 6) {
+                if (Objects.equals(cardCategorySingle.substring(20, 21), " ")) {
+                    int economicValueNum = 2;
+                    totalDifference = economicValueNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(22, 23), " ")) {
+                    int economicValueNum = 4;
+                    totalDifference = economicValueNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(24, 25), " ")) {
+                    //String economicValueString = cardCategorySingle.substring(17, 23);
+                    int economicValueNum = 1;
+                    totalDifference = economicValueNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(25, 26), " ")) {
+                    //String economicValueString = cardCategorySingle.substring(17, 24);
+                    int economicValueNum = 3;
+                    totalDifference = economicValueNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(26, 27), " ")) {
+                    //String economicValueString = cardCategorySingle.substring(17, 25);
+                    int economicValueNum = 5;
+                    totalDifference = economicValueNum - previousCardNum;
+                }
+                if (Objects.equals(cardCategorySingle.substring(27, 28), " ")) {
+                    //String economicValueString = cardCategorySingle.substring(17, 26);
+                    int economicValueNum = 6;
+                    totalDifference = economicValueNum - previousCardNum;
+                }
+            }
+            totalDifferenceArray[x] = totalDifference;
+        }
+
+        double distance = Math.abs(totalDifferenceArray[0] - previousCardNum);
+        int idx = 0;
+        for (int c = 0; c < totalDifferenceArray.length; c++) {
+            double cdistance = Math.abs(totalDifferenceArray[0] - previousCardNum);
+            if (cdistance < distance) {
+                idx = c;
+                distance = cdistance;
+            }
+        }
+        double matchedNumber = totalDifferenceArray[idx];
+        String matchedNumberString = String.valueOf(matchedNumber);
+        String idxString = String.valueOf(idx);
+        return new String[]{matchedNumberString, idxString};
+    }
+
 
     private String[] determinePlayerOrder() {
         String[] characterOrder = new String[0];
@@ -895,4 +1334,3 @@ public class STgame {
         return characterOrder;
     }
 }
-
