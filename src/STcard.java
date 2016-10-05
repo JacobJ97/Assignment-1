@@ -18,7 +18,7 @@ public class STcard {
     private String[] cardHardness = {"7", "6-6.5", "6-6.5", "2.5-3", "2.5-3", "5-6.0", "5-6.0", "6", "6.5-7", "6-7.5", "5-5.5", "7.5",
             "5.5-6.5", "5-6.0", "2-3.0", "3.5-4", "1", "1.5-2.5", "6.5-7", "5.5-7", "6.5-7.5", "7", "6-6.5", "7-7.5", "8",
             "7.5-8", "6-6.5", "3.5-4.5", "3.5-4", "2.5", "3.5-4", "1-1.5", "2.5-3", "10", "1-2.0", "2.5", "4", "2",
-            "3-3.5", "5", "5", "3", "3.5-4", "4", "4-4.5", "5.5-6", "5-6", "5.5", "5-6.0", "6-6.5", "9", "6-7.0", "2.5-3.5",
+            "3-3.5", "5", "5", "3", "3.5-4", "4", "4-4.5", "5.5-6", "5-6.0", "5.5", "5-6.0", "6-6.5", "9", "6-7.0", "2.5-3.5",
             "5-5.5"};
 
     private String[] cardGravity = {"2.65", "2.6-2.8", "2.5-2.6", "2.7-3.3", "2.8-2.9", "3.0-3.5", "3.0-3.5", "3.0-3.2",
@@ -27,7 +27,7 @@ public class STcard {
             "7.5-7.6", "3.9-4.1", "4.7", "19.3", "3.5", "2.2", "2.2", "3.2", "2.3", "4.5", "3.1-3.2", "5-5.3", "2.7",
             "2.9", "3.0", "4.0", "5.2", "5.3", "4.5-5.1", "4.7-4.8", "4.3", "4.0", "6.9-7.1", "2.4", "4.3"};
 
-    private String[] cardCleavage = {"poor / none", "1 perfect-1 good", "1 perfect-1 good", "1 perfect", "1 perfect", "2 good", "2 good",
+    private String[] cardCleavage = {"poor./.none", "1 perfect-1 good", "1 perfect-1 good", "1 perfect", "1 perfect", "2 good", "2 good",
             "2 good", "2 poor", "none", "3 good", "2 poor", "2 good", "2 good", "1 perfect", "1 perfect", "1 perfect",
             "1 perfect", "2 good", "1 perfect-1 good", "1 perfect-1 good", "1 good", "1 perfect", "2 poor",
             "1 perfect", "1 poor", "2 poor", "none", "2 poor", "3 perfect", "6 perfect", "1 perfect", "none",
@@ -53,7 +53,7 @@ public class STcard {
 
     private String[] superTrumpCardDesc = {"Change trump category to 'Economic Value'",
             "Change trump category to 'Crustal Abundance'", "Change trump category to 'Hardness'",
-            "Change trump category to 'Cleavage", "Change trump category to 'Specific Gravity'",
+            "Change trump category to 'Cleavage'", "Change trump category to 'Specific Gravity'",
             "Change trump category to category of your choice"};
 
 
