@@ -91,6 +91,11 @@ public class STgame {
         ArrayList<String> computerThreeHand = null;
         ArrayList<String> computerFourHand = null;
         String cardCategory = "";
+        boolean playerCanPlay = true;
+        boolean computerOneCanPlay = true;
+        boolean computerTwoCanPlay = true;
+        boolean computerThreeCanPlay = true;
+        boolean computerFourCanPlay = true;
         int numOfCardsInDeckLeft = numOfPlayers * 5;
         Scanner input = new Scanner(System.in);
         boolean gameIsRunning = true;
@@ -114,7 +119,11 @@ public class STgame {
         }
 
         while (gameIsRunning) {
-            Boolean turnLoop = true;
+            boolean turnLoopHuman = true;
+            boolean turnLoopComputerOne = true;
+            boolean turnLoopComputerTwo = true;
+            boolean turnLoopComputerThree = true;
+            boolean turnLoopComputerFour = true;
             System.out.println("\n *** Turn " + z + " *** \n");
             for (int y = 0; y < characterOrder.length; y++) {
                 String characterIDNumPlay = characterOrder[y];
@@ -123,8 +132,8 @@ public class STgame {
                 if (numOfPlayers >= THREE_PLAYERS) {
                     if (characterIDNumSingle == '0') {
                         //System.out.println("Human player's turn.");
-                        while (turnLoop) {
-                            turnLoop = true;
+                        while (turnLoopHuman && playerCanPlay) {
+                            turnLoopHuman = true;
                             System.out.println("What would you like to do?");
                             System.out.println("1. See cards");
                             System.out.println("2. Play card");
@@ -206,7 +215,7 @@ public class STgame {
                                     humanHand.remove(matchingCard);
                                     pileOfCards.add(playersChosenCardID);
                                     System.out.println("Your card has been successfully thrown out.");
-                                    turnLoop = false;
+                                    turnLoopHuman = false;
                                 }
                                 if (!booleanCard) {
                                     previousCardNumArray.remove(previousCardNumArray.size() - 1);
@@ -219,145 +228,174 @@ public class STgame {
                                 ArrayList<STcard> cardPickedUp = deck.pickUpCard(numOfCardsInDeckLeft);
                                 STcard cardPickedUpObject = cardPickedUp.remove(0);
                                 String cardDetailsPickedUp = cardPickedUpObject.toString();
+                                System.out.println(cardDetailsPickedUp);
                                 humanHand.add(cardDetailsPickedUp);
-                                turnLoop = false;
+                                turnLoopHuman = false;
+                                playerCanPlay = false;
+                                numOfCardsInDeckLeft++;
                             }
                         }
                     }
                     if (characterIDNumSingle == '1') {
-                        System.out.println("Computer player's 1 turn");
-                        if (pileOfCards.size() == 0) {
-                            Random random = new Random();
-                            int randCategoryChoice = random.nextInt(5) + 1;
-                            switch (randCategoryChoice) {
-                                case 1: {
-                                    cardCategory = "Card Hardness";
-                                    System.out.println("Computer 1 changed category to Hardness.");
-                                    break;
-                                }
-                                case 2: {
-                                    cardCategory = "Card Gravity";
-                                    System.out.println("Computer 1 changed category to Specific Gravity.");
-                                    break;
-                                }
-                                case 3: {
-                                    cardCategory = "Card Cleavage";
-                                    System.out.println("Computer 1 changed category to Cleavage.");
-                                    break;
-                                }
-                                case 4: {
-                                    cardCategory = "Card Crustal Abundance";
-                                    System.out.println("Computer 1 changed category to Crustal Abundance.");
-                                    break;
-                                }
-                                case 5: {
-                                    cardCategory = "Card Economic Value";
-                                    System.out.println("Computer 1 changed category to Economic Value.");
-                                    break;
-                                }
-                            }
-                        }
-                        String[][] computersChosenIDCard = splitingCardsComputer(computerOneHand);
-                        String[] regularCardArrays = computersChosenIDCard[0];
-                        String[] superTrumpCardArrays = computersChosenIDCard[1];
-                        String[] validCardDetails = findValidCardComputer(regularCardArrays, superTrumpCardArrays,
-                                cardCategory, previousCardNum);
-                        if (Objects.equals(validCardDetails[0], "Card ID: 55") || Objects.equals(validCardDetails[0], "Card ID: 56") ||
-                                Objects.equals(validCardDetails[0], "Card ID: 57") || Objects.equals(validCardDetails[0], "Card ID: 58") ||
-                                Objects.equals(validCardDetails[0], "Card ID: 59") || Objects.equals(validCardDetails[0], "Card ID: 60")) {
-                            cardCategory = validCardDetails[1];
-                            for (int x = 0; x < computerOneHand.size(); x++) {
-                                String retrievedCard = computerOneHand.get(x);
-                                retrievedCard = retrievedCard.replace("\n", "");
-                                retrievedCard = retrievedCard.replace(" Card", "Card");
-                                String[] retrievedCardSplit = retrievedCard.split("|");
-                                String superTrumpCardIDRetrieved = validCardDetails[0];
-                                if (Objects.equals(superTrumpCardIDRetrieved, retrievedCardSplit[0])) {
-                                    int matchingCard = x;
-                                    pileOfCards.add(computerOneHand.get(matchingCard));
-                                    humanHand.remove(computerOneHand.remove(matchingCard));
-                                    System.out.println("Computer One has thrown out: " + computerOneHand.get(matchingCard));
+                        while (turnLoopComputerOne && computerOneCanPlay) {
+                            System.out.println("Computer player's 1 turn");
+                            if (pileOfCards.size() == 0) {
+                                Random random = new Random();
+                                int randCategoryChoice = random.nextInt(5) + 1;
+                                switch (randCategoryChoice) {
+                                    case 1: {
+                                        cardCategory = "Card Hardness";
+                                        System.out.println("Computer 1 changed category to Hardness.");
+                                        break;
+                                    }
+                                    case 2: {
+                                        cardCategory = "Card Gravity";
+                                        System.out.println("Computer 1 changed category to Specific Gravity.");
+                                        break;
+                                    }
+                                    case 3: {
+                                        cardCategory = "Card Cleavage";
+                                        System.out.println("Computer 1 changed category to Cleavage.");
+                                        break;
+                                    }
+                                    case 4: {
+                                        cardCategory = "Card Crustal Abundance";
+                                        System.out.println("Computer 1 changed category to Crustal Abundance.");
+                                        break;
+                                    }
+                                    case 5: {
+                                        cardCategory = "Card Economic Value";
+                                        System.out.println("Computer 1 changed category to Economic Value.");
+                                        break;
+                                    }
                                 }
                             }
-                        }
-                        else {
-                            String cardArrayPositionString = validCardDetails[0];
-                            int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
-                            String chosenCardFinal = computerOneHand.get(cardArrayPosition);
-                            String[] chosenCardFinalSplit = chosenCardFinal.split("|");
-                            humanHand.remove(computerOneHand.remove(cardArrayPosition));
-                            pileOfCards.add(chosenCardFinal);
-                            System.out.println("Computer One has thrown out: " + chosenCardFinal);
+                            String[][] computersChosenIDCard = splitingCardsComputer(computerOneHand);
+                            String[] regularCardArrays = computersChosenIDCard[0];
+                            String[] superTrumpCardArrays = computersChosenIDCard[1];
+                            String[] validCardDetails = findValidCardComputer(regularCardArrays, superTrumpCardArrays,
+                                    cardCategory, previousCardNum);
+                            if (validCardDetails == null) {
+                                ArrayList<STcard> cardPickedUp = deck.pickUpCard(numOfCardsInDeckLeft);
+                                STcard cardPickedUpObject = cardPickedUp.remove(0);
+                                String cardDetailsPickedUp = cardPickedUpObject.toString();
+                                humanHand.add(cardDetailsPickedUp);
+                                System.out.println("Computer One has picked up a card.");
+                                computerOneCanPlay = false;
+                                turnLoopComputerOne = false;
+                                numOfCardsInDeckLeft++;
+                                break;
+                            }
+                            if (Objects.equals(validCardDetails[0], "Card ID: 55") || Objects.equals(validCardDetails[0], "Card ID: 56") ||
+                                    Objects.equals(validCardDetails[0], "Card ID: 57") || Objects.equals(validCardDetails[0], "Card ID: 58") ||
+                                    Objects.equals(validCardDetails[0], "Card ID: 59") || Objects.equals(validCardDetails[0], "Card ID: 60")) {
+                                cardCategory = validCardDetails[1];
+                                for (int x = 0; x < computerOneHand.size(); x++) {
+                                    String retrievedCard = computerOneHand.get(x);
+                                    retrievedCard = retrievedCard.replace("\n", "");
+                                    retrievedCard = retrievedCard.replace(" Card", "Card");
+                                    String[] retrievedCardSplit = retrievedCard.split("|");
+                                    String superTrumpCardIDRetrieved = validCardDetails[0];
+                                    if (Objects.equals(superTrumpCardIDRetrieved, retrievedCardSplit[0])) {
+                                        pileOfCards.add(computerOneHand.get(x));
+                                        humanHand.remove(computerOneHand.remove(x));
+                                        System.out.println("Computer One has thrown out: " + computerOneHand.get(x));
+                                        turnLoopComputerOne = false;
+                                    }
+                                }
+                            } else {
+                                String cardArrayPositionString = validCardDetails[0];
+                                int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
+                                String chosenCardFinal = computerOneHand.get(cardArrayPosition);
+                                String[] chosenCardFinalSplit = chosenCardFinal.split("|");
+                                humanHand.remove(computerOneHand.remove(cardArrayPosition));
+                                pileOfCards.add(chosenCardFinal);
+                                System.out.println("Computer One has thrown out: " + chosenCardFinal);
+                                turnLoopComputerOne = false;
+                            }
                         }
                     }
                     if (characterIDNumSingle == '2') {
-                        System.out.println("Computer player's 2 turn");
-                        if (pileOfCards.size() == 0) {
-                            Random random = new Random();
-                            int randCategoryChoice = random.nextInt(5) + 1;
-                            switch (randCategoryChoice) {
-                                case 1: {
-                                    cardCategory = "Card Hardness";
-                                    System.out.println("Computer 2 changed category to Hardness.");
-                                    break;
-                                }
-                                case 2: {
-                                    cardCategory = "Card Gravity";
-                                    System.out.println("Computer 2 changed category to Specific Gravity.");
-                                    break;
-                                }
-                                case 3: {
-                                    cardCategory = "Card Cleavage";
-                                    System.out.println("Computer 2 changed category to Cleavage.");
-                                    break;
-                                }
-                                case 4: {
-                                    cardCategory = "Card Crustal Abundance";
-                                    System.out.println("Computer 2 changed category to Crustal Abundance.");
-                                    break;
-                                }
-                                case 5: {
-                                    cardCategory = "Card Economic Value";
-                                    System.out.println("Computer 2 changed category to Economic Value.");
-                                    break;
-                                }
-                            }
-                        }
-                        String[][] computersChosenIDCard = splitingCardsComputer(computerTwoHand);
-                        String[] regularCardArrays = computersChosenIDCard[0];
-                        String[] superTrumpCardArrays = computersChosenIDCard[1];
-                        String[] validCardDetails = findValidCardComputer(regularCardArrays, superTrumpCardArrays,
-                                cardCategory, previousCardNum);
-                        if (Objects.equals(validCardDetails[0], "Card ID: 55") || Objects.equals(validCardDetails[0], "Card ID: 56") ||
-                                Objects.equals(validCardDetails[0], "Card ID: 57") || Objects.equals(validCardDetails[0], "Card ID: 58") ||
-                                Objects.equals(validCardDetails[0], "Card ID: 59") || Objects.equals(validCardDetails[0], "Card ID: 60")) {
-                            cardCategory = validCardDetails[1];
-                            for (int x = 0; x < computerTwoHand.size(); x++) {
-                                String retrievedCard = computerTwoHand.get(x);
-                                retrievedCard = retrievedCard.replace("\n", "");
-                                retrievedCard = retrievedCard.replace(" Card", "Card");
-                                String[] retrievedCardSplit = retrievedCard.split("|");
-                                String superTrumpCardIDRetrieved = validCardDetails[0];
-                                if (Objects.equals(superTrumpCardIDRetrieved, retrievedCardSplit[0])) {
-                                    int matchingCard = x;
-                                    String cardToAdd = computerTwoHand.get(matchingCard);
-                                    pileOfCards.add(cardToAdd);
-                                    humanHand.remove(computerTwoHand.remove(matchingCard));
-                                    System.out.println("Computer Two has thrown out: " + cardToAdd);
+                        while (turnLoopComputerTwo && computerTwoCanPlay) {
+                            System.out.println("Computer player's 2 turn");
+                            if (pileOfCards.size() == 0) {
+                                Random random = new Random();
+                                int randCategoryChoice = random.nextInt(5) + 1;
+                                switch (randCategoryChoice) {
+                                    case 1: {
+                                        cardCategory = "Card Hardness";
+                                        System.out.println("Computer 2 changed category to Hardness.");
+                                        break;
+                                    }
+                                    case 2: {
+                                        cardCategory = "Card Gravity";
+                                        System.out.println("Computer 2 changed category to Specific Gravity.");
+                                        break;
+                                    }
+                                    case 3: {
+                                        cardCategory = "Card Cleavage";
+                                        System.out.println("Computer 2 changed category to Cleavage.");
+                                        break;
+                                    }
+                                    case 4: {
+                                        cardCategory = "Card Crustal Abundance";
+                                        System.out.println("Computer 2 changed category to Crustal Abundance.");
+                                        break;
+                                    }
+                                    case 5: {
+                                        cardCategory = "Card Economic Value";
+                                        System.out.println("Computer 2 changed category to Economic Value.");
+                                        break;
+                                    }
                                 }
                             }
-
-                        }
-                        else {
-                            String cardArrayPositionString = validCardDetails[0];
-                            int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
-                            String cardToAdd = computerTwoHand.get(cardArrayPosition);
-                            pileOfCards.add(cardToAdd);
-                            humanHand.remove(computerTwoHand.remove(cardArrayPosition));
-                            System.out.println("Computer Two has thrown out " + cardToAdd);
+                            String[][] computersChosenIDCard = splitingCardsComputer(computerTwoHand);
+                            String[] regularCardArrays = computersChosenIDCard[0];
+                            String[] superTrumpCardArrays = computersChosenIDCard[1];
+                            String[] validCardDetails = findValidCardComputer(regularCardArrays, superTrumpCardArrays,
+                                    cardCategory, previousCardNum);
+                            if (validCardDetails == null) {
+                                ArrayList<STcard> cardPickedUp = deck.pickUpCard(numOfCardsInDeckLeft);
+                                STcard cardPickedUpObject = cardPickedUp.remove(0);
+                                String cardDetailsPickedUp = cardPickedUpObject.toString();
+                                humanHand.add(cardDetailsPickedUp);
+                                System.out.println("Computer Two has picked up a card.");
+                                computerTwoCanPlay = false;
+                                numOfCardsInDeckLeft++;
+                                break;
+                            }
+                            if (Objects.equals(validCardDetails[0], "Card ID: 55") || Objects.equals(validCardDetails[0], "Card ID: 56") ||
+                                    Objects.equals(validCardDetails[0], "Card ID: 57") || Objects.equals(validCardDetails[0], "Card ID: 58") ||
+                                    Objects.equals(validCardDetails[0], "Card ID: 59") || Objects.equals(validCardDetails[0], "Card ID: 60")) {
+                                cardCategory = validCardDetails[1];
+                                for (int x = 0; x < computerTwoHand.size(); x++) {
+                                    String retrievedCard = computerTwoHand.get(x);
+                                    retrievedCard = retrievedCard.replace("\n", "");
+                                    retrievedCard = retrievedCard.replace(" Card", "Card");
+                                    String[] retrievedCardSplit = retrievedCard.split("|");
+                                    String superTrumpCardIDRetrieved = validCardDetails[0];
+                                    if (Objects.equals(superTrumpCardIDRetrieved, retrievedCardSplit[0])) {
+                                        String cardToAdd = computerTwoHand.get(x);
+                                        pileOfCards.add(cardToAdd);
+                                        humanHand.remove(computerTwoHand.remove(x));
+                                        System.out.println("Computer Two has thrown out: " + cardToAdd);
+                                        turnLoopComputerTwo = false;
+                                    }
+                                }
+                            } else {
+                                String cardArrayPositionString = validCardDetails[0];
+                                int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
+                                String cardToAdd = computerTwoHand.get(cardArrayPosition);
+                                pileOfCards.add(cardToAdd);
+                                humanHand.remove(computerTwoHand.remove(cardArrayPosition));
+                                System.out.println("Computer Two has thrown out: " + cardToAdd);
+                                turnLoopComputerTwo = false;
+                            }
                         }
                     }
-                    if (numOfPlayers >= FOUR_PLAYERS) {
+                }
+                if (numOfPlayers >= FOUR_PLAYERS) {
+                    while (turnLoopComputerThree && computerThreeCanPlay) {
                         if (characterIDNumSingle == '3') {
                             System.out.println("Computer player's 3 turn");
                             if (pileOfCards.size() == 0) {
@@ -396,6 +434,16 @@ public class STgame {
                             String[] superTrumpCardArrays = computersChosenIDCard[1];
                             String[] validCardDetails = findValidCardComputer(regularCardArrays, superTrumpCardArrays,
                                     cardCategory, previousCardNum);
+                            if (validCardDetails == null) {
+                                ArrayList<STcard> cardPickedUp = deck.pickUpCard(numOfCardsInDeckLeft);
+                                STcard cardPickedUpObject = cardPickedUp.remove(0);
+                                String cardDetailsPickedUp = cardPickedUpObject.toString();
+                                humanHand.add(cardDetailsPickedUp);
+                                System.out.println("Computer Three has picked up a card.");
+                                computerThreeCanPlay = false;
+                                numOfCardsInDeckLeft++;
+                                break;
+                            }
                             if (Objects.equals(validCardDetails[0], "Card ID: 55") || Objects.equals(validCardDetails[0], "Card ID: 56") ||
                                     Objects.equals(validCardDetails[0], "Card ID: 57") || Objects.equals(validCardDetails[0], "Card ID: 58") ||
                                     Objects.equals(validCardDetails[0], "Card ID: 59") || Objects.equals(validCardDetails[0], "Card ID: 60")) {
@@ -406,97 +454,108 @@ public class STgame {
                                     retrievedCard = retrievedCard.replace(" Card", "Card");
                                     String superTrumpCardIDRetrieved = validCardDetails[0];
                                     if (Objects.equals(superTrumpCardIDRetrieved, retrievedCard)) {
-                                        int matchingCard = x;
-                                        String cardToAdd = computerThreeHand.get(matchingCard);
+                                        String cardToAdd = computerThreeHand.get(x);
                                         pileOfCards.add(cardToAdd);
-                                        humanHand.remove(computerThreeHand.remove(matchingCard));
+                                        humanHand.remove(computerThreeHand.remove(x));
                                         System.out.println("Computer Three has thrown out: " + cardToAdd);
+                                        turnLoopComputerThree = false;
                                     }
                                 }
-
-                            }
-                            else {
+                            } else {
                                 String cardArrayPositionString = validCardDetails[0];
                                 int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
                                 String cardToAdd = computerTwoHand.get(cardArrayPosition);
-                                pileOfCards.add(cardToAdd));
+                                pileOfCards.add(cardToAdd);
                                 humanHand.remove(computerThreeHand.remove(cardArrayPosition));
                                 System.out.println("Computer Three has thrown out: " + cardToAdd);
+                                turnLoopComputerThree = false;
                             }
                         }
                     }
-
                 }
                 if (numOfPlayers >= FIVE_PLAYERS) {
                     if (characterIDNumSingle == '4') {
-                        System.out.println("Computer player's 4 turn");
-                        if (pileOfCards.size() == 0) {
-                            Random random = new Random();
-                            int randCategoryChoice = random.nextInt(5) + 1;
-                            switch (randCategoryChoice) {
-                                case 1: {
-                                    cardCategory = "Card Hardness";
-                                    System.out.println("Computer 4 changed category to Hardness.");
-                                    break;
-                                }
-                                case 2: {
-                                    cardCategory = "Card Gravity";
-                                    System.out.println("Computer 4 changed category to Specific Gravity.");
-                                    break;
-                                }
-                                case 3: {
-                                    cardCategory = "Card Cleavage";
-                                    System.out.println("Computer 4 changed category to Cleavage.");
-                                    break;
-                                }
-                                case 4: {
-                                    cardCategory = "Card Crustal Abundance";
-                                    System.out.println("Computer 4 changed category to Crustal Abundance.");
-                                    break;
-                                }
-                                case 5: {
-                                    cardCategory = "Card Economic Value";
-                                    System.out.println("Computer 4 changed category to Economic Value.");
-                                    break;
-                                }
-                            }
-                        }
-                        String[][] computersChosenIDCard = splitingCardsComputer(computerFourHand);
-                        String[] regularCardArrays = computersChosenIDCard[0];
-                        String[] superTrumpCardArrays = computersChosenIDCard[1];
-                        String[] validCardDetails = findValidCardComputer(regularCardArrays, superTrumpCardArrays,
-                                cardCategory, previousCardNum);
-                        if (Objects.equals(validCardDetails[0], "Card ID: 55") || Objects.equals(validCardDetails[0], "Card ID: 56") ||
-                                Objects.equals(validCardDetails[0], "Card ID: 57") || Objects.equals(validCardDetails[0], "Card ID: 58") ||
-                                Objects.equals(validCardDetails[0], "Card ID: 59") || Objects.equals(validCardDetails[0], "Card ID: 60")) {
-                            cardCategory = validCardDetails[1];
-                            for (int x = 0; x < computerFourHand.size(); x++) {
-                                String retrievedCard = computerFourHand.get(x);
-                                retrievedCard = retrievedCard.replace("\n", "");
-                                retrievedCard = retrievedCard.replace(" Card", "Card");
-                                String superTrumpCardIDRetrieved = validCardDetails[0];
-                                if (Objects.equals(superTrumpCardIDRetrieved, retrievedCard)) {
-                                    int matchingCard = x;
-                                    String cardToAdd = computerFourHand.get(matchingCard);
-                                    pileOfCards.add(cardToAdd);
-                                    humanHand.remove(computerFourHand.remove(matchingCard));
+                        while (turnLoopComputerFour && computerFourCanPlay) {
+                            System.out.println("Computer player's 4 turn");
+                            if (pileOfCards.size() == 0) {
+                                Random random = new Random();
+                                int randCategoryChoice = random.nextInt(5) + 1;
+                                switch (randCategoryChoice) {
+                                    case 1: {
+                                        cardCategory = "Card Hardness";
+                                        System.out.println("Computer 4 changed category to Hardness.");
+                                        break;
+                                    }
+                                    case 2: {
+                                        cardCategory = "Card Gravity";
+                                        System.out.println("Computer 4 changed category to Specific Gravity.");
+                                        break;
+                                    }
+                                    case 3: {
+                                        cardCategory = "Card Cleavage";
+                                        System.out.println("Computer 4 changed category to Cleavage.");
+                                        break;
+                                    }
+                                    case 4: {
+                                        cardCategory = "Card Crustal Abundance";
+                                        System.out.println("Computer 4 changed category to Crustal Abundance.");
+                                        break;
+                                    }
+                                    case 5: {
+                                        cardCategory = "Card Economic Value";
+                                        System.out.println("Computer 4 changed category to Economic Value.");
+                                        break;
+                                    }
                                 }
                             }
+                            String[][] computersChosenIDCard = splitingCardsComputer(computerFourHand);
+                            String[] regularCardArrays = computersChosenIDCard[0];
+                            String[] superTrumpCardArrays = computersChosenIDCard[1];
+                            String[] validCardDetails = findValidCardComputer(regularCardArrays, superTrumpCardArrays,
+                                    cardCategory, previousCardNum);
+                            if (validCardDetails == null) {
+                                ArrayList<STcard> cardPickedUp = deck.pickUpCard(numOfCardsInDeckLeft);
+                                STcard cardPickedUpObject = cardPickedUp.remove(0);
+                                String cardDetailsPickedUp = cardPickedUpObject.toString();
+                                humanHand.add(cardDetailsPickedUp);
+                                System.out.println("Computer Four has picked up a card.");
+                                computerFourCanPlay = false;
+                                numOfCardsInDeckLeft++;
+                                break;
+                            }
+                            if (Objects.equals(validCardDetails[0], "Card ID: 55") || Objects.equals(validCardDetails[0], "Card ID: 56") ||
+                                    Objects.equals(validCardDetails[0], "Card ID: 57") || Objects.equals(validCardDetails[0], "Card ID: 58") ||
+                                    Objects.equals(validCardDetails[0], "Card ID: 59") || Objects.equals(validCardDetails[0], "Card ID: 60")) {
+                                cardCategory = validCardDetails[1];
+                                for (int x = 0; x < computerFourHand.size(); x++) {
+                                    String retrievedCard = computerFourHand.get(x);
+                                    retrievedCard = retrievedCard.replace("\n", "");
+                                    retrievedCard = retrievedCard.replace(" Card", "Card");
+                                    String superTrumpCardIDRetrieved = validCardDetails[0];
+                                    if (Objects.equals(superTrumpCardIDRetrieved, retrievedCard)) {
+                                        int matchingCard = x;
+                                        String cardToAdd = computerFourHand.get(matchingCard);
+                                        pileOfCards.add(cardToAdd);
+                                        humanHand.remove(computerFourHand.remove(matchingCard));
+                                        turnLoopComputerFour = false;
+                                    }
+                                }
 
-                        }
-                        else {
-                            String cardArrayPositionString = validCardDetails[0];
-                            int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
-                            pileOfCards.add(computerFourHand.get(cardArrayPosition));
-                            humanHand.remove(computerFourHand.remove(cardArrayPosition));
+                            } else {
+                                String cardArrayPositionString = validCardDetails[0];
+                                int cardArrayPosition = Integer.parseInt(cardArrayPositionString);
+                                pileOfCards.add(computerFourHand.get(cardArrayPosition));
+                                humanHand.remove(computerFourHand.remove(cardArrayPosition));
+                                turnLoopComputerFour = false;
+                            }
                         }
                     }
                 }
             }
-        }
-        z++;
-        if (z == 10) {
-            gameIsRunning = false;
+            z++;
+            if (z == 10) {
+                gameIsRunning = false;
+            }
         }
     }
 
@@ -779,27 +838,27 @@ public class STgame {
                     if (Objects.equals(superTrumpName, " Name: The Miner")) {
                         cardCategory = "Card Economic Value";
                         System.out.println("Category has been changed to Economic Value.");
-                        return new String[] {superTrumpCardID, cardCategory};
+                        return new String[]{superTrumpCardID, cardCategory};
                     }
                     if (Objects.equals(superTrumpName, " Name: The Petrologist")) {
                         cardCategory = "Card Crustal Abundance";
                         System.out.println("Category has been changed to Crustal Abundance.");
-                        return new String[] {superTrumpCardID, cardCategory};
+                        return new String[]{superTrumpCardID, cardCategory};
                     }
                     if (Objects.equals(superTrumpName, " Name: The Gemmologist")) {
                         cardCategory = "Card Hardness";
                         System.out.println("Category has been changed to Hardness.");
-                        return new String[] {superTrumpCardID, cardCategory};
+                        return new String[]{superTrumpCardID, cardCategory};
                     }
                     if (Objects.equals(superTrumpName, " Name: The Mineralogist")) {
                         cardCategory = "Card Cleavage";
                         System.out.println("Category has been changed to Cleavage.");
-                        return new String[] {superTrumpCardID, cardCategory};
+                        return new String[]{superTrumpCardID, cardCategory};
                     }
                     if (Objects.equals(superTrumpName, " Name: The Geophysicist")) {
                         cardCategory = "Card Gravity";
                         System.out.println("Category has been changed to Specific Gravity.");
-                        return new String[] {superTrumpCardID, cardCategory};
+                        return new String[]{superTrumpCardID, cardCategory};
                     }
                     if (Objects.equals(superTrumpName, " Name: The Geologist")) {
                         Random random = new Random();
@@ -808,30 +867,32 @@ public class STgame {
                             case 1: {
                                 cardCategory = "Card Hardness";
                                 System.out.println("Category has been changed to Hardness.");
-                                return new String[] {superTrumpCardID, cardCategory};
+                                return new String[]{superTrumpCardID, cardCategory};
                             }
                             case 2: {
                                 cardCategory = "Card Gravity";
                                 System.out.println("Category has been changed to Specific Gravity.");
-                                return new String[] {superTrumpCardID, cardCategory};
+                                return new String[]{superTrumpCardID, cardCategory};
                             }
                             case 3: {
                                 cardCategory = "Card Cleavage";
                                 System.out.println("Category has been changed to Cleavage.");
-                                return new String[] {superTrumpCardID, cardCategory};
+                                return new String[]{superTrumpCardID, cardCategory};
                             }
                             case 4: {
                                 cardCategory = "Card Crustal Abundance";
                                 System.out.println("Category has been changed to Crustal Abundance.");
-                                return new String[] {superTrumpCardID, cardCategory};
+                                return new String[]{superTrumpCardID, cardCategory};
                             }
                             case 5: {
                                 cardCategory = "Card Economic Value";
                                 System.out.println("Category has been changed to Economic Value.");
-                                return new String[] {superTrumpCardID, cardCategory};
+                                return new String[]{superTrumpCardID, cardCategory};
                             }
                         }
                     }
+                } else {
+                    return null;
                 }
             }
             String idxString = String.valueOf(idx);
@@ -850,6 +911,7 @@ public class STgame {
                 superTrumpArray[0] = cardCategory;
                 superTrumpArray[1] = "true";
                 superTrumpArray[2] = "SUPERTRUMP CARD";
+                System.out.println("Player has changed category to " + cardCategory);
                 return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Petrologist ")) {
@@ -857,6 +919,7 @@ public class STgame {
                 superTrumpArray[0] = cardCategory;
                 superTrumpArray[1] = "true";
                 superTrumpArray[2] = "SUPERTRUMP CARD";
+                System.out.println("Player has changed category to " + cardCategory);
                 return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Gemmologist ")) {
@@ -864,6 +927,7 @@ public class STgame {
                 superTrumpArray[0] = cardCategory;
                 superTrumpArray[1] = "true";
                 superTrumpArray[2] = "SUPERTRUMP CARD";
+                System.out.println("Player has changed category to " + cardCategory);
                 return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Mineralogist ")) {
@@ -871,6 +935,7 @@ public class STgame {
                 superTrumpArray[0] = cardCategory;
                 superTrumpArray[1] = "true";
                 superTrumpArray[2] = "SUPERTRUMP CARD";
+                System.out.println("Player has changed category to " + cardCategory);
                 return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Geophysicist ")) {
@@ -878,6 +943,7 @@ public class STgame {
                 superTrumpArray[0] = cardCategory;
                 superTrumpArray[1] = "true";
                 superTrumpArray[2] = "SUPERTRUMP CARD";
+                System.out.println("Player has changed category to " + cardCategory);
                 return superTrumpArray;
             }
             if (Objects.equals(cardIDSplit[2], " Name: The Geologist ")) {
@@ -900,6 +966,7 @@ public class STgame {
                         superTrumpArray[0] = cardCategory;
                         superTrumpArray[1] = "true";
                         superTrumpArray[2] = "SUPERTRUMP CARD";
+                        System.out.println("Player has changed category to " + cardCategory);
                         return superTrumpArray;
                     }
                     case 2: {
@@ -907,6 +974,7 @@ public class STgame {
                         superTrumpArray[0] = cardCategory;
                         superTrumpArray[1] = "true";
                         superTrumpArray[2] = "SUPERTRUMP CARD";
+                        System.out.println("Player has changed category to " + cardCategory);
                         return superTrumpArray;
                     }
                     case 3: {
@@ -914,6 +982,7 @@ public class STgame {
                         superTrumpArray[0] = cardCategory;
                         superTrumpArray[1] = "true";
                         superTrumpArray[2] = "SUPERTRUMP CARD";
+                        System.out.println("Player has changed category to " + cardCategory);
                         return superTrumpArray;
                     }
                     case 4: {
@@ -921,6 +990,7 @@ public class STgame {
                         superTrumpArray[0] = cardCategory;
                         superTrumpArray[1] = "true";
                         superTrumpArray[2] = "SUPERTRUMP CARD";
+                        System.out.println("Player has changed category to " + cardCategory);
                         return superTrumpArray;
                     }
                     case 5: {
@@ -928,6 +998,7 @@ public class STgame {
                         superTrumpArray[0] = cardCategory;
                         superTrumpArray[1] = "true";
                         superTrumpArray[2] = "SUPERTRUMP CARD";
+                        System.out.println("Player has changed category to " + cardCategory);
                         return superTrumpArray;
                     }
                 }
